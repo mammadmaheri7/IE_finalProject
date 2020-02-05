@@ -74,7 +74,7 @@ class Control extends Component {
             return (
               
                 <Container>
-                    <h1>لیست فرم‌ها:</h1>
+                    <h1>دیدن جواب‌ها:</h1>
 
                     <List component="nav">
                         {listItems}

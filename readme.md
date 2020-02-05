@@ -165,7 +165,7 @@
         ```
 
 * **Response** if any error occuers: 
-    + `400 Bad **Request**`
+    + `400 Bad Request`
     ```json
     {
         "status": "error",
@@ -194,7 +194,7 @@
     ```
 
 
-## Retrive list of all responses to a single _form_
+## Retrive list of all responses to a single _form_ (Contains only location fields)
 
 * **Request**:
     + `GET`
@@ -212,15 +212,20 @@
                 "fields":
                 [
                     {
-                        "name": "Request_Type" , 
-                        "title": "Request Type" , 
-                        "type": "Text" , 
-                        "value": "Submitted value by user",
+                        "name": "Request_Type", 
+                        "title": "Request Type", 
+                        "type": "Loc", 
+                        "label": "Location Label",
+                        "value":
+                            {
+                                "lat": "1.2",
+                                "long": "3.2",
+                            },
                     },
                     .
                     .
                     .
-                ]                     
+                ],                     
             },
             .
             .
@@ -230,7 +235,7 @@
     ```
 
 
-## Retrive details of a single _response_ to a single _form_:
+## Retrive details of a single _response_ to a single _form_ (Contains all fields)
 
 * **Request**:
     + `GET`
@@ -243,18 +248,20 @@
             "fields":
             [
                 {
-                    "name": "Request_Type" , 
-                    "title": "Request Type" , 
-                    "type": "Text" , 
-                    "value": "Submitted value by user",
+                    "name": "Request_Type", 
+                    "title": "Request Type", 
+                    "type": "Loc", 
+                    "label": "Location Label",
+                    "value":
+                        {
+                            "lat": "1.2",
+                            "long": "3.2",
+                        },
                 },
                 .
                 .
                 .
-            ],
-            "additional_info": {
-                "submit_date_time": "<Date Time>",
-            }               
+            ],          
         }
     ```
 

@@ -74,7 +74,7 @@ class Field extends Component {
             return (
               
                 <Container>
-                    <h1>لیست فرم‌ها:</h1>
+                    <h1>ثبت فرم:</h1>
 
                     <List component="nav">
                         {listItems}
