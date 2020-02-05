@@ -54,32 +54,32 @@ class FieldForm extends Component {
                         type: "Text",
                         required: true
                     }, 
-                    // {
-                    //     name: "Loc" , 
-                    //     title: "Your Location" , 
-                    //     type: "Location",
-                    //     required: false
-                    // }, 
-                    // {
-                    //     name: "Request_Type" , 
-                    //     title: "Request Type" , 
-                    //     type: "Text" , 
-                    //     options:
-                    //     [
-                    //         {label : "Help" , value : "Help"}, 
-                    //         {label : "Info" , value : "Information"} 
-                    //     ] 
-                    // } , 
-                    // {
-                    //     name:"Base_Location" , 
-                    //     title : "Base Location" , 
-                    //     type : "Location" , 
-                    //     options:
-                    //     [
-                    //         {label : "Base1" , value : {lat : "1.2" , long: "3.2"}}, 
-                    //         {label : "Base2" , value : {lat : "2.3" , long : "1.434" }} 
-                    //     ] 
-                    // } 
+                    {
+                        name: "Loc" , 
+                        title: "Your Location" , 
+                        type: "Location",
+                        required: false
+                    }, 
+                    {
+                        name: "Request_Type" , 
+                        title: "Request Type" , 
+                        type: "Text" , 
+                        options:
+                        [
+                            {label : "Help" , value : "Help"}, 
+                            {label : "Info" , value : "Information"} 
+                        ] 
+                    } , 
+                    {
+                        name:"Base_Location" , 
+                        title : "Base Location" , 
+                        type : "Location" , 
+                        options:
+                        [
+                            {label : "Base1" , value : {lat : "1.2" , long: "3.2"}}, 
+                            {label : "Base2" , value : {lat : "2.3" , long : "1.434" }} 
+                        ] 
+                    } 
                 ] 
             },
             formReady: true,
@@ -90,20 +90,24 @@ class FieldForm extends Component {
 
 
     handleSubmit(json) {
-        alert(json);
-        // fetch('http://localhost:5000/api/form/submit', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(json)
-        // })
-        // .then((results) => results.json(), () => alert("ERROR!"))
-        // .then((json) => {
-        //     alert(json.message); // shows success message
-        //     window.location.href = "../"; // redirects to ./
-        // });
+        let submit_body = {
+            form_id: this.form_id,
+            response: json
+        }
+
+        fetch('http://localhost:5000/api/form/submit', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: submit_body
+        })
+        .then((results) => results.json(), () => alert("ERROR!"))
+        .then((json) => {
+            alert(json.message); // shows message
+            window.location.href = "../"; // redirects to ./
+        });
     }
 
 
@@ -118,7 +122,7 @@ class FieldForm extends Component {
         {
             return (
                 <Container>
-                    <h2>فرم را پر کنید:</h2>
+                    <h2 className="form-title">{this.state.formInfo.title}</h2>
                     
                     <Button variant="contained" color="primary" href="/field">
                         « برگشت
@@ -127,8 +131,7 @@ class FieldForm extends Component {
                     <DynamicForm
                         className="form"
                         title="Registration"
-                        model= '{ "title":"A smaple form" , "id" : "134" , "fields" : [ { "name":"First_Name" , "title" : "First Name" , "type" : "text", "required":true } , { "name":"Loc" , "title" : "Your Location" , "type" : "Location", "required":false } , { "name":"Request_Type" , "title" : "Request Type" , "type" : "Text" , "options" : [ {"label" : "Help" , "value" : "Help"}, {"label" : "Info" , "value" : "Information"} ] } , { "name":"Base_Location" , "title" : "Base Location" , "type" : "Location" ,"required": "true", "options" : [ {"label" : "Base1" , "value" : {"lat" : "1.2" , "long": "3.2"}}, {"label" : "Base2" , "value" : {"lat" : "2.3" , "long" : "1.434" }} ] } ] }'
-                        // model={JSON.stringify(this.state.formInfo)}
+                        model={JSON.stringify(this.state.formInfo)}
                         onSubmit={model => {
                             this.handleSubmit(model);
                         }}

@@ -8,7 +8,7 @@ import {
 import { Link } from 'react-router-dom';
 
 
-class Field extends Component {
+class Control extends Component {
     constructor(props) {
         super(props);
 
@@ -65,7 +65,7 @@ class Field extends Component {
             const forms = this.state.forms;
             const listItems = forms.map((item) => {
                 return (
-                    <ListItem button key={item.form_id} component={Link} to={`/field/form/${item.form_id}`}>
+                    <ListItem button key={item.form_id} component={Link} to={`/control/form/${item.form_id}`}>
                             <ListItemText primary={item.title} />
                     </ListItem>
                 );
@@ -91,4 +91,4 @@ class Field extends Component {
     }
 }
 
-export default Field;
+export default Control;

@@ -120,6 +120,7 @@ export default class DynamicForm extends React.Component {
   renderForm = () => {
     let model = this.model;
     let fields = this.getFields(model)
+    console.log(fields)
     let formUI = fields.map(m => {
       let key = m.name;
       let type = m.type || "text";
@@ -145,7 +146,7 @@ export default class DynamicForm extends React.Component {
         />
       );
       if(m.options !== undefined){
-        
+        console.log("this is options : ", m.options)
           input = m.options.map(o => {
               return (
                 <option
@@ -154,7 +155,7 @@ export default class DynamicForm extends React.Component {
                   key={o.label}
                   value={JSON.stringify(o.value)}
                 >
-                  {JSON.stringify(o.value)}
+                  {(o.label)}
                 </option>
               );
             });
@@ -192,8 +193,8 @@ export default class DynamicForm extends React.Component {
         );
       }
       if (type === "Location"){
+
           if(m.options === undefined){
-            console.log("this is key key key",key)
             input =
             <MapContainer    
             {...props}               
@@ -214,6 +215,7 @@ export default class DynamicForm extends React.Component {
                     key={o.label}
                     value={JSON.stringify(o.value)}
                   >
+
                     {JSON.stringify(o.value)}
                   </option>
                 );

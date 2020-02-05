@@ -156,7 +156,7 @@
                     "lat": "...",
                     "long": "...",
                 },
-                "**Request**_Type": "Water",
+                "Request_Type": "Water",
                 .
                 .
                 .
