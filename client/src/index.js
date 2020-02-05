@@ -5,8 +5,9 @@ import * as serviceWorker from './serviceWorker';
 import './index.css';
 
 // Import Route Components
-import Home from './Home.js';
-import FormView from './FormView';
+import Login from './Login.js';
+import Field from './Field.js';
+import FieldForm from './FieldForm.js';
 
 // Import routing components
 import {
@@ -56,8 +57,9 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
         <RTL>
             <Router>
-                <Route exact path="/" component={Home} theme={theme} />
-                <Route path="/form/:fid" component={FormView} theme={theme} />
+                <Route exact path="/" component={Login} theme={theme} />
+                <Route exact path="/field" component={Field} theme={theme} />
+                <Route path="/field/form/:fid" component={FieldForm} theme={theme} />
             </Router>
         </RTL>
     </ThemeProvider>

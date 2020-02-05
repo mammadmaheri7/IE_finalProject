@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.1",
+    "@material-ui/pickers": "^3.2.10",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
@@ -15,6 +16,7 @@
     "jss-rtl": "^0.3.0",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
+    "react-datepicker": "^2.11.0",
     "react-dom": "^16.12.0",
     "react-google-maps": "^9.4.5",
     "react-jsonschema-form": "^1.8.1",
