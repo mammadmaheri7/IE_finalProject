@@ -111,7 +111,7 @@
                 "required": true
             }, 
             {
-                "name": "Loc" , 
+                "name": "Your_Location" , 
                 "title": "Your Location" , 
                 "type": "Location",
                 "required": false
@@ -152,7 +152,7 @@
             "response":
             {
                 "Key": "Value",
-                "Loc": {
+                "Your_Location": {
                     "lat": "...",
                     "long": "...",
                 },
@@ -212,9 +212,9 @@
                 "fields":
                 [
                     {
-                        "name": "Request_Type", 
-                        "title": "Request Type", 
-                        "type": "Loc", 
+                        "name": "Home", 
+                        "title": "Home", 
+                        "type": "Location", 
                         "label": "Location Label",
                         "value":
                             {
@@ -244,13 +244,14 @@
 * **Response**:
     ```json
         {
+            "form_id": 1,
             "response_id": 1,
             "fields":
             [
                 {
-                    "name": "Request_Type", 
-                    "title": "Request Type", 
-                    "type": "Loc", 
+                    "name": "Home", 
+                    "title": "Home", 
+                    "type": "Location", 
                     "label": "Location Label",
                     "value":
                         {

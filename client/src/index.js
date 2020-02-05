@@ -10,6 +10,7 @@ import Field from './Field.js';
 import FieldForm from './FieldForm.js';
 import Control from './Control.js';
 import ControlForm from './ControlForm.js';
+import ControlFormResponse from './ControlFormResponse.js';
 
 // Import routing components
 import {
@@ -61,9 +62,10 @@ ReactDOM.render(
             <Router>
                 <Route exact path="/" component={Login} theme={theme} />
                 <Route exact path="/field" component={Field} theme={theme} />
-                <Route path="/field/form/:fid" component={FieldForm} theme={theme} />
+                <Route exact path="/field/form/:fid" component={FieldForm} theme={theme} />
                 <Route exact path="/control" component={Control} theme={theme} />
-                <Route path="/control/form/:fid" component={ControlForm} theme={theme} />
+                <Route exact path="/control/form/:fid" component={ControlForm} theme={theme} />
+                <Route exact path="/control/form/:fid/response/:rid" component={ControlFormResponse} theme={theme} />
             </Router>
         </RTL>
     </ThemeProvider>
