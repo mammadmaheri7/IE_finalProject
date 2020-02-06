@@ -15,7 +15,10 @@ module.exports = (app) => {
     form = req.body
     
 
-    value = await Counter.findOne({_id:"formid"})
+    value = await Counter.findOne({_id:"formid"}).catch(err => {
+      console.log("rokh dad")
+    });
+    
     temp = value.sequence_value
     value.sequence_value = ++value.sequence_value;
     await value.save()
@@ -23,20 +26,16 @@ module.exports = (app) => {
     form._id = temp
     form.fields = Object.assign({}, req.body.fields)
     console.log(form.fields)
-    let x  = await Form.create(form,function(err,doc){
-      if(err) return res.send({
+    let x  = await Form.create(form).catch(err => {
+      return res.status(400).send({
         "status": "error",
         "message": "Error message",
       })
-
-      return res.status(201).send({
-        "status": "ok",
-        "message": "'First Form' inserted successfuly.",
-      })
     });
+
     return res.status(201).send({
       "status": "ok",
-      "message": "'First Form' inserted successfuly.",
+      "message": form.title+" inserted successfuly.",
     })
   })
 
