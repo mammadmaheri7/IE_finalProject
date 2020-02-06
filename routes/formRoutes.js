@@ -4,19 +4,31 @@ const Form = mongoose.model('forms');
 const Counter = mongoose.model('counters');
 
 module.exports = (app) => {
-  /*
-  app.get(`/api/product`, async (req, res) => {
-    let products = await Product.find();
-    return res.status(200).send(products);
+  
+  app.get(`/api/forms`, async (req, res) => {
+    let forms = await Form.find();
+    let response = []
+    forms.forEach(element => {
+      let temp = {}
+      
+      temp.title = element.title
+      temp.form_id = element._id
+      temp.url = "api/forms/"+ element._id
+      response.push(temp)
+    });
+    
+    let final = {}
+    final.forms = response
+    return res.status(200).send(final);
   });
-  */
+  
 
   app.post(`/api/forms`, async (req, res) => {
     form = req.body
     
 
     value = await Counter.findOne({_id:"formid"}).catch(err => {
-      console.log("rokh dad")
+      console.log("error on finding id occured")
     });
     
     temp = value.sequence_value
@@ -25,7 +37,7 @@ module.exports = (app) => {
 
     form._id = temp
     form.fields = Object.assign({}, req.body.fields)
-    console.log(form.fields)
+    //console.log(form.fields)
     let x  = await Form.create(form).catch(err => {
       return res.status(400).send({
         "status": "error",
