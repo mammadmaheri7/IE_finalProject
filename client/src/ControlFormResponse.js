@@ -42,14 +42,40 @@ class Control extends Component {
                 fields:
                     [
                         {
+                            name:"Birth_Date" , 
+                            title: "Birth Date" , 
+                            type: "Date",
+                            required: true,
+                            value : "2020-02-18T20:30:00.000Z"
+                
+                        }, 
+                        {
+                            name:"Number" , 
+                            title: "Number" , 
+                            type: "Number",
+                            required: true,
+                            value : "5"
+                  
+                        }, 
+                        {
+                            name: "Request_Type" , 
+                            title: "Request Type" , 
+                            type: "Text" , 
+                            options:
+                            [
+                                {label : "Help" , value : "Help"}, 
+                                {label : "Info" , value : "Information"} 
+                            ] ,
+                            value : "\"Help\""
+                        }, 
+                        {
                             name: "Home",
                             title: "خانه",
                             type: "Location",
                             label: "خیابان شریعتی",
-                            value:
-                            {
-                                "lat": "1.2",
-                                "long": "3.2",
+                            value : {
+                                "lat":35.618974646696394,
+                                "long":51.36702734375001
                             },
                         },
                         {
@@ -57,10 +83,9 @@ class Control extends Component {
                             title: "محل کار",
                             type: "Location",
                             label: "خیابان اندرزگو",
-                            value:
-                            {
-                                "lat": "5.5",
-                                "long": "6.6",
+                            value : {
+                                "lat":55.618974646696394,
+                                "long":61.36702734375001
                             },
                         },
                     ],
@@ -69,6 +94,11 @@ class Control extends Component {
         });
             
     }
+
+
+    onSubmit = model => {
+        alert(JSON.stringify(model));    
+    };
 
     render() {
         if(!this.state.ready) // Loading Progress Bar
@@ -90,7 +120,7 @@ class Control extends Component {
                     </Button>
 
                     <DynamicForm
-                        valueAvailable="true"
+                        valueAvailable={true}
                         className="form"
                         title="Registration"
                         model={JSON.stringify(this.state.responseInfo)}

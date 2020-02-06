@@ -205,6 +205,18 @@
     {
         "title": "First Form",
         "form_id": 1,
+        "form_fields":
+        [
+            {
+                "name": "Home", 
+                "title": "Home", 
+                "type": "Location", 
+                "label": "Location Label"
+            },
+            .
+            .
+            .
+        ],
         "responses":
         [
             {
@@ -326,7 +338,7 @@
     [geojson.io](http://geojson.io/)
     
 
-## Retrieve All _polygons_ area containt a _geo-location_ inside themeselves:
+## Retrieve All _polygons_ area contains a _geo-location_ inside themeselves:
 
 * **Request**:
     + `GET`
@@ -348,12 +360,34 @@
     }
     ```
 
+## Retrieve All _polygons_:
+
+* **Request**:
+    + `GET`
+    + `/api/polygons/`
+
+* **Response**:
+    ```json
+    {
+        "polygons":
+        [
+            {
+                "polygon_id": 1,
+                "name": "Tehran",
+            },
+            .
+            .
+            .
+        ]
+    }
+    ```
+
 
 ## Filter the _responses_ to a single _form_ by _polygon_ areas:
 
 * **Request**:
     + `GET`
-    + `/api/forms/<FORM_ID>/responses/filter/?polygon_id=<POLYGON_ID>`
+    + `/api/forms/<FORM_ID>/responses/filter/?field=<FIELD_NAME>&polygon_id=<POLYGON_ID>`
 
 
 * **Response** for filtered request:

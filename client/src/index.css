@@ -93,3 +93,16 @@ code {
     monospace;
 }
 
+.csv-dl {
+	float: left;
+	text-decoration: none;
+	border: 1px solid #f39c12;
+	color: #f39c12;
+	padding: 5px 10px;
+	border-radius: 10px;
+	transition: ease-in-out 0.3s;
+}
+
+.csv-dl:hover {
+	background-color: #fff7d9;
+}
