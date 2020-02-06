@@ -25,9 +25,6 @@ const themeTable = createMuiTheme({
         MuiTableRow: {
             root: {
                 "cursor": 'pointer',
-                "&:hover": {
-                    backgroundColor: '#f1f1f1',
-                },
             }
         },
 
@@ -404,14 +401,18 @@ class ControlForm extends Component {
                         row_cells.push(field)
                 })
 
+
                 rows.push({
                     response_id: response.response_id,
                     values: row_cells,
                 })
+
             });
 
 
+            // Build Rows in MaterialUI Components
             let tableRows = [];
+            let sumVals = new Array(rows[0].values.length).fill(0);
 
             rows.forEach(row => {
                 let rowCells = [];
@@ -423,8 +424,10 @@ class ControlForm extends Component {
                     </TableCell>
                 );
 
-                row.values.forEach(val => {
+                // data rows
+                row.values.forEach((val, index) => {
                     let rowCell = null;
+
                     if (val.type === "Location") {
                         if (val.label !== undefined) {
                             rowCell =
@@ -444,16 +447,47 @@ class ControlForm extends Component {
                             <TableCell align="left" key={row.response_id + "_" + val.name}>
                                 {val.value}
                             </TableCell>
+
+                        if (val.type === "Number") {
+                            sumVals[index] += parseInt(val.value);
+                        }
                     }
                     rowCells.push(rowCell);
                 })
 
+
+                // Add rows to table
                 tableRows.push(
                     <TableRow key={row.response_id} hover onClick={() => this.handleRowClick(row.response_id)}>
                         {rowCells}
                     </TableRow>
                 );
+
             });
+
+
+            // Conver summations to MaterialUi Components
+            let sumCells = sumVals.map(sum => (
+                <TableCell align="left" style={{color: "white"}}>
+                    {sum === 0 ? '-' : sum}
+                </TableCell>
+            ));
+            sumCells.unshift(
+                <TableCell align="left" style={{color: "white"}}>
+                    <b>
+                    مجموع:
+                    </b>
+                </TableCell>
+            );
+
+            // Add sum row to table
+            tableRows.push(
+                    <TableRow hover={false} style={{cursor: "default", backgroundColor: "#222f3e"}}>
+                        {sumCells}
+                    </TableRow>
+            );
+
+
 
             let filter_details = null;
             if (this.state.filter.type === "Location") {
@@ -490,7 +524,6 @@ class ControlForm extends Component {
             // Prepare CSV
             csv_data.push(headers);
             rows.forEach(row => {
-                console.log(row);
                 let csv_row = [];
                 row.values.forEach(v => {
                     if (v.type === "Location") {
@@ -529,12 +562,12 @@ class ControlForm extends Component {
                         <TableContainer component={Paper}>
                             <Table>
                                 <TableHead>
-                                    <TableRow>
-                                        <TableCell component="th" scope="row" key="id">
-                                            ردیف
+                                    <TableRow style={{backgroundColor: "#222f3e"}}>
+                                        <TableCell component="th" scope="row" key="id" style={{color: "white"}}>
+                                            شماره پاسخ
                                             </TableCell>
                                         {headers.map(col => (
-                                            <TableCell component="th" scope="row" key={col}>
+                                            <TableCell component="th" scope="row" key={col} style={{color: "white"}}>
                                                 {col}
                                             </TableCell>
                                         ))}
