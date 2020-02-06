@@ -9,14 +9,20 @@ module.exports = (app) => {
   });
 
   app.post(`/api/product`, async (req, res) => {
+      /*
     let product = await Product.create(req.body);
     return res.status(201).send({
       error: false,
       product
     })
+    */
+   Counter.findById(formid, function (err, counter) {
+    if (err) return next(err);
+    res.send(counter);
+})
   })
 
-  app.put(`/api/product/:id`, async (req, res) => {
+  app.put(`/api/product/:id`, async (req, res) => { 
     const {id} = req.params;
 
     let product = await Product.findByIdAndUpdate(id, req.body);
