@@ -62,7 +62,7 @@ export default class DynamicForm extends React.Component {
             {
               [key]: {
                   lat : e.latLng.lat(),
-                  lng : e.latLng.lng()
+                  long : e.latLng.lng()
               }
             },
             () => {}
@@ -216,7 +216,7 @@ export default class DynamicForm extends React.Component {
                 this.onChange(e, key,"MapLocation");
               }}
             lat= {value !== undefined ? value.lat : 1}
-            lng = {value !== undefined ? value.lng : 1}
+            lng = {value !== undefined ? value.long : 1}
             />
               input = <div >{input}</div>;
           }
