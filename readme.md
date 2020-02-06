@@ -338,7 +338,7 @@
     [geojson.io](http://geojson.io/)
     
 
-<!-- ## Retrieve All _polygons_ area contains a _geo-location_ inside themeselves:
+## Retrieve All _polygons_ area contains a _geo-location_ inside themeselves:
 
 * **Request**:
     + `GET`
@@ -358,7 +358,7 @@
             .
         ]
     }
-    ``` -->
+    ```
 
 ## Retrieve All _polygons_:
 
