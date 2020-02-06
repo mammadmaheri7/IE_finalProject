@@ -8,9 +8,13 @@ import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
     createMuiTheme, MuiThemeProvider,
     FormControl,
-    InputLabel, Input, FormHelperText, OutlinedInput, FilledInput,
-    Select, MenuItem
+    InputLabel,
+    Select, MenuItem,
+    TextField
 } from '@material-ui/core';
+
+// CSV
+import { CSVLink, CSVDownload } from "react-csv";
 
 const themeTable = createMuiTheme({
     direction: 'rtl',
@@ -53,7 +57,12 @@ class ControlForm extends Component {
             form_id: null,
             form_fields: null,
             responses: null,
+            table: {
+                headers: [],
+                rows: []
+            },
             filter: {
+                options: [],
                 name: null, // Field name
                 type: null, // Field type
                 value: null, // Polygon
@@ -144,7 +153,6 @@ class ControlForm extends Component {
                                     type: "Number",
                                     required: true,
                                     value: "5"
-
                                 },
                                 {
                                     name: "Request_Type",
@@ -161,7 +169,7 @@ class ControlForm extends Component {
                                     name: "Home",
                                     title: "خانه",
                                     type: "Location",
-                                    label: "خیابان شریعتی",
+                                    // label: "خیابان شریعتی",
                                     value: {
                                         "lat": 35.618974646696394,
                                         "long": 51.36702734375001
@@ -196,7 +204,7 @@ class ControlForm extends Component {
                                     title: "Number",
                                     type: "Number",
                                     required: true,
-                                    value: "5"
+                                    value: "3"
 
                                 },
                                 {
@@ -252,8 +260,8 @@ class ControlForm extends Component {
             ready: true,
         });
 
-    }
 
+    }
 
     handleRowClick = response_id => {
         window.location.href = `/control/form/${this.state.form_id}/response/${response_id}`; // redirects
@@ -264,6 +272,7 @@ class ControlForm extends Component {
 
         this.setState({
             filter: {
+                ...this.state.filter,
                 name: field.name,
                 type: field.type,
                 value: null,
@@ -274,74 +283,90 @@ class ControlForm extends Component {
     handleLocationSelect = event => {
         this.setState({
             filter: {
+                ...this.state.filter,
+                value: event.target.value
+            }
+        });
+    }
+
+    handleTextFilter = event => {
+        this.setState({
+            filter: {
+                ...this.state.filter,
                 value: event.target.value
             }
         });
     }
 
     applyFilter = event => {
-        // TODO: API Call to apply filter with query
+        this.setState({
+            ready: false
+        })
+
+        // TODO: API Call to apply filter with query according to filter type
 
         // response 1 deleted for example
         this.setState({
             responses:
-            [
-                {
-                    response_id: 2,
-                    fields:
-                        [
-                            {
-                                name: "Birth_Date",
-                                title: "Birth Date",
-                                type: "Date",
-                                required: true,
-                                value: "2020-02-18T20:30:00.000Z"
+                [
+                    {
+                        response_id: 2,
+                        fields:
+                            [
+                                {
+                                    name: "Birth_Date",
+                                    title: "Birth Date",
+                                    type: "Date",
+                                    required: true,
+                                    value: "2020-02-18T20:30:00.000Z"
 
-                            },
-                            {
-                                name: "Number",
-                                title: "Number",
-                                type: "Number",
-                                required: true,
-                                value: "5"
+                                },
+                                {
+                                    name: "Number",
+                                    title: "Number",
+                                    type: "Number",
+                                    required: true,
+                                    value: "3"
 
-                            },
-                            {
-                                name: "Request_Type",
-                                title: "Request Type",
-                                type: "Text",
-                                options:
-                                    [
-                                        { label: "Help", value: "Help" },
-                                        { label: "Info", value: "Information" }
-                                    ],
-                                value: "\"Help\""
-                            },
-                            {
-                                name: "Home",
-                                title: "خانه",
-                                type: "Location",
-                                label: "خیابان 1",
-                                value: {
-                                    "lat": 35.618974646696394,
-                                    "long": 51.36702734375001
                                 },
-                            },
-                            {
-                                name: "Work",
-                                title: "محل کار",
-                                type: "Location",
-                                label: "خیابان 2",
-                                value: {
-                                    "lat": 55.618974646696394,
-                                    "long": 61.36702734375001
+                                {
+                                    name: "Request_Type",
+                                    title: "Request Type",
+                                    type: "Text",
+                                    options:
+                                        [
+                                            { label: "Help", value: "Help" },
+                                            { label: "Info", value: "Information" }
+                                        ],
+                                    value: "\"Help\""
                                 },
-                            },
-                        ],
-                },
-            ]
+                                {
+                                    name: "Home",
+                                    title: "خانه",
+                                    type: "Location",
+                                    label: "خیابان 1",
+                                    value: {
+                                        "lat": 35.618974646696394,
+                                        "long": 51.36702734375001
+                                    },
+                                },
+                                {
+                                    name: "Work",
+                                    title: "محل کار",
+                                    type: "Location",
+                                    label: "خیابان 2",
+                                    value: {
+                                        "lat": 55.618974646696394,
+                                        "long": 61.36702734375001
+                                    },
+                                },
+                            ],
+                    },
+                ],
+            ready: true,
         })
     }
+
 
     render() {
         if (!this.state.ready) // Loading Progress Bar
@@ -351,6 +376,7 @@ class ControlForm extends Component {
             );
         }
         else {
+
             const responses = this.state.responses.slice();
             const sample_response = responses[0];
 
@@ -358,7 +384,7 @@ class ControlForm extends Component {
             let headers = [];
             let filterby = [];
             sample_response.fields.forEach(field => {
-                if (field.type === "Location")
+                if (field.type === "Location" || field.type === "Number")
                     headers.push(field.title);
 
                 filterby.push({
@@ -368,61 +394,120 @@ class ControlForm extends Component {
                 })
             })
 
-
-
             // Determine Rows of table
             let rows = [];
             responses.forEach(response => {
 
-                let location_fields = [];
+                let row_cells = [];
                 response.fields.forEach(field => {
-                    if (field.type === "Location")
-                        location_fields.push(field)
+                    if (field.type === "Location" || field.type === "Number")
+                        row_cells.push(field)
                 })
 
                 rows.push({
                     response_id: response.response_id,
-                    values: location_fields,
+                    values: row_cells,
                 })
             });
 
-            const tableRows = rows.map((row) => {
-                return (
-                    <TableRow key={row.response_id} hover onClick={() => this.handleRowClick(row.response_id)}>
-                        <TableCell component="th" scope="row">
-                            {row.response_id}
-                        </TableCell>
 
-                        {row.values.map(v => (
-                            <TableCell align="left" key={row.response_id + "_" + v.name}>{v.label}</TableCell>
-                        ))}
+            let tableRows = [];
+
+            rows.forEach(row => {
+                let rowCells = [];
+
+                // headers
+                rowCells.push(
+                    <TableCell component="th" scope="row">
+                        {row.response_id}
+                    </TableCell>
+                );
+
+                row.values.forEach(val => {
+                    let rowCell = null;
+                    if (val.type === "Location") {
+                        if (val.label !== undefined) {
+                            rowCell =
+                                <TableCell align="left" key={row.response_id + "_" + val.name}>
+                                    {val.label}
+                                </TableCell>
+                        }
+                        else {
+                            rowCell =
+                                <TableCell align="left" key={row.response_id + "_" + val.name}>
+                                    {"(" + val.value.lat + ", " + val.value.long + ")"}
+                                </TableCell>
+                        }
+                    }
+                    else {
+                        rowCell =
+                            <TableCell align="left" key={row.response_id + "_" + val.name}>
+                                {val.value}
+                            </TableCell>
+                    }
+                    rowCells.push(rowCell);
+                })
+
+                tableRows.push(
+                    <TableRow key={row.response_id} hover onClick={() => this.handleRowClick(row.response_id)}>
+                        {rowCells}
                     </TableRow>
                 );
             });
 
-
             let filter_details = null;
-            if(this.state.filter.type === "Location")
-            {
+            if (this.state.filter.type === "Location") {
                 filter_details =
                     <div>
                         <FormControl>
                             <InputLabel ref="" id="demo-simple-select-outlined-label">
                                 در منطقه:
                             </InputLabel>
-                            <Select
-                                name="area"
-                                autoWidth={true}
-                            >
+                            <Select name="area" autoWidth={true}>
                                 {this.state.polygons.map(poly => (
                                     <MenuItem selected={this.state.filter.area === poly.polygon_id} value={poly.polygon_id}>{poly.name}</MenuItem>
-                                ))}                 
+                                ))}
                             </Select>
                         </FormControl>
                         <br /><br />
                     </div>
             }
+            else if (this.state.filter.type === "Text") {
+                filter_details =
+                    <div>
+                        <FormControl>
+                            <TextField id="standard-basic" label="دارای" name="text" onChange={(e) => this.handleTextFilter(e)} />
+                        </FormControl>
+                        <br /><br />
+                    </div>
+            }
 
+
+            // CSV Download now
+            let csv_dl = null;
+            let csv_data = [];
+
+            // Prepare CSV
+            csv_data.push(headers);
+            rows.forEach(row => {
+                console.log(row);
+                let csv_row = [];
+                row.values.forEach(v => {
+                    if (v.type === "Location") {
+                        if (v.label === undefined) {
+                            csv_row.push("(" + v.value.lat + ", " + v.value.long + ")")
+                        }
+                        else {
+                            csv_row.push(v.label);
+                        }
+                    }
+                    else {
+                        csv_row.push(v.value);
+                    }
+
+                })
+                csv_data.push(csv_row);
+            });
 
             return (
                 <Container>
@@ -433,6 +518,12 @@ class ControlForm extends Component {
                         <Button variant="contained" color="primary" href="/control">
                             « برگشت
                         </Button>
+
+                        <CSVLink className="csv-dl" data={csv_data} filename="table.csv">دانلود CSV</CSVLink>
+
+                        {csv_dl}
+
+                        <br /><br />
 
                         {/* Data Table */}
                         <TableContainer component={Paper}>
@@ -465,11 +556,6 @@ class ControlForm extends Component {
                         {/* Filter */}
                         <form noValidate autoComplete="off">
                             <MuiThemeProvider theme={themeForm}>
-
-                                {/* <FormControl variant="outlined">
-                                <InputLabel htmlFor="component-outlined">فیلتر با؟</InputLabel>
-                                <OutlinedInput id="component-outlined" label="Name" />
-                            </FormControl> */}
 
                                 <FormControl>
                                     <InputLabel ref="" id="demo-simple-select-outlined-label">
