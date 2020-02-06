@@ -1,10 +1,12 @@
 import React from 'react';
 import { withGoogleMap, withScriptjs, GoogleMap, Marker } from 'react-google-maps';
 
-const MyMap = withScriptjs(withGoogleMap(props =>
-    <GoogleMap
+const MyMap = withScriptjs(withGoogleMap(props =>{
+    let defaultLat = props.lat ? props.lat :  35.6892;
+    let defaultLong = props.lng ? props.lng :  51.3890;
+   return <GoogleMap
         defaultZoom={8}
-        defaultCenter={{ lat: 35.6892, lng: 51.3890}}
+        defaultCenter={{  lat: defaultLat, lng: defaultLong}}
         onClick={props.onClick}
     >
 
@@ -15,6 +17,7 @@ const MyMap = withScriptjs(withGoogleMap(props =>
             }}
         />
     </GoogleMap>
+}
 ));
 export class MapContainer extends React.Component {
     constructor(props) {
