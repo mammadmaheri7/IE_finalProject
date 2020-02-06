@@ -11,6 +11,7 @@ export default class DynamicForm extends React.Component {
 
   constructor(props) {
     super(props);
+    this.valueAvailable = this.props.valueAvailable;
     this.model = JSON.parse(this.props.model)
     this.state.id = this.model.id;
 
@@ -38,14 +39,15 @@ export default class DynamicForm extends React.Component {
   }
 
   onSubmit = e => {
-      console.log("submit :    ", this.state)
+      console.log("submit :    ", this.state.First_Name)
+      console.log("submit -2 :    ", new Date(JSON.parse(JSON.stringify(this.state.First_Name)))) 
     e.preventDefault();
     if (this.props.onSubmit) this.props.onSubmit(this.state);
   };
 
   onChange = (e, key, type = "single") => {
     //console.log(`${key} changed ${e.target.value} type ${type}`);
-    console.log(e)
+    //console.log(e)
     if (type === "single") {
       this.setState(
         {
@@ -104,8 +106,12 @@ export default class DynamicForm extends React.Component {
     const fields = model.fields
    // console.log("model" , model)
     for (const field of fields){
+      field.props = {}
+        if(this.valueAvailable === true){
+          field.props.disabled = true;
+          console.log("vallllueee", field.value)
+        }
         if(field.required !== undefined){
-            field.props = {}
             field.props.required = field.required
         }
         if(field.type === "Text"){
@@ -130,7 +136,14 @@ export default class DynamicForm extends React.Component {
       let title = m.title;
 
       let target = key;
-      value = this.state[target] || "";
+      if(this.valueAvailable){
+        if(type === "Date")
+        value = new Date(JSON.parse(JSON.stringify(m.value)))////////////////
+        else
+        value = m.value
+      }
+      else
+        value = this.state[target] || "";
 
       let input = (
         <input
@@ -148,6 +161,7 @@ export default class DynamicForm extends React.Component {
       if(m.options !== undefined){
         console.log("this is options : ", m.options)
           input = m.options.map(o => {
+            console.log(o.value)
               return (
                 <option
                   {...props}
@@ -201,8 +215,8 @@ export default class DynamicForm extends React.Component {
             onClick={e => {
                 this.onChange(e, key,"MapLocation");
               }}
-            lat= {this.state[key] !== undefined ? this.state[key].lat : 1}
-            lng = {this.state[key] !== undefined ? this.state[key].lng : 1}
+            lat= {value !== undefined ? value.lat : 1}
+            lng = {value !== undefined ? value.lng : 1}
             />
               input = <div >{input}</div>;
           }
@@ -311,7 +325,7 @@ export default class DynamicForm extends React.Component {
         input = (
           <DatePicker
           {...props}
-          selected={this.state[key]} 
+          selected={value} 
             onChange={e => {
               this.onChange(e, key, "Date");
             }}
@@ -362,7 +376,7 @@ export default class DynamicForm extends React.Component {
 
   render() {
     let title = this.model.title;
-
+    let submitButtonDisabled = this.valueAvailable;
     return (
       <div className={this.props.className}>
         <h3 className="form-title">{title}</h3>
@@ -374,7 +388,7 @@ export default class DynamicForm extends React.Component {
         >
           {this.renderForm()}
           <div className="form-actions">
-            <Button type="submit" color="primary" variant="contained" >submit</Button>
+            <Button disabled ={submitButtonDisabled} type="submit" color="primary" variant="contained" >submit</Button>
           </div>
         </form>
       </div>
