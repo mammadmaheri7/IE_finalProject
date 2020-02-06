@@ -6,11 +6,15 @@ import './index.css';
 
 // Import Route Components
 import Login from './Login.js';
+
 import Field from './Field.js';
 import FieldForm from './FieldForm.js';
+
 import Control from './Control.js';
 import ControlForm from './ControlForm.js';
 import ControlFormResponse from './ControlFormResponse.js';
+
+import Admin from './Admin.js';
 
 // Import routing components
 import {
@@ -66,6 +70,7 @@ ReactDOM.render(
                 <Route exact path="/control" component={Control} theme={theme} />
                 <Route exact path="/control/form/:fid" component={ControlForm} theme={theme} />
                 <Route exact path="/control/form/:fid/response/:rid" component={ControlFormResponse} theme={theme} />
+                <Route exact path="/control" component={Admin} theme={theme} />
             </Router>
         </RTL>
     </ThemeProvider>

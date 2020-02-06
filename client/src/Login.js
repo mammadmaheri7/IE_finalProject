@@ -17,8 +17,12 @@ class Login extends Component {
                     ثبت اطلاعات
                 </Button>
                 <br /><br />
-                <Button variant="contained" color="default" href="/control">
+                <Button variant="contained" color="secondary" href="/control">
                     مرکز کنترل
+                </Button>
+                <br /><br />
+                <Button variant="contained" color="default" href="/admin">
+                    پنل ادمین
                 </Button>
             </Container>
 
