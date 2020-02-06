@@ -4,7 +4,7 @@ const FieldInputs = (props) => {
   let fieldProps = {}
   fieldProps.required = props.required
   return (
-    props.Fields.map((val, idx)=> {
+    props.fields.map((val, idx)=> {
       let catId = idx
       let out = (
         <div key={idx}>
@@ -15,7 +15,7 @@ const FieldInputs = (props) => {
           <input {...props}
             type="text"
             name={catId}
-            value={props.Fields[idx].name} 
+            value={props.fields[idx].name} 
             className="name"
             onChange={props.onChange}
           />
@@ -27,7 +27,7 @@ const FieldInputs = (props) => {
           <input {...props}
             type="text"
             name={catId}
-            value={props.Fields[idx].title} 
+            value={props.fields[idx].title} 
             className="title"
             onChange={props.onChange}
 
@@ -39,7 +39,7 @@ const FieldInputs = (props) => {
           <input {...props}
             type="text"
             name={catId}
-            value={props.Fields[idx].type} 
+            value={props.fields[idx].type} 
             className="type"
             onChange={props.onChange}
 
@@ -51,7 +51,7 @@ const FieldInputs = (props) => {
           <input {...props}
             type="text"
             name={catId}
-            value={props.Fields[idx].required} 
+            value={props.fields[idx].required} 
             className="required"
             onChange={props.onChange}
 
@@ -68,8 +68,8 @@ const FieldInputs = (props) => {
         </div>
       )
       let options = <div></div>
-      if(props.Fields[idx].options){
-        options =  props.Fields[idx].options.map((val, option_id)=> {
+      if(props.fields[idx].options){
+        options =  props.fields[idx].options.map((val, option_id)=> {
             return (<ul>
               <li>
               <label htmlFor={option_id}>label</label>
@@ -78,7 +78,7 @@ const FieldInputs = (props) => {
               <input {...props}
             type="text"
             name={option_id}
-            value={props.Fields[idx].options[option_id].label} 
+            value={props.fields[idx].options[option_id].label} 
             className="option_label"
             onChange={(e) => props.handleOptionChange(e,idx,option_id,"label")}
 
@@ -91,7 +91,7 @@ const FieldInputs = (props) => {
             <input {...props}
             type="text"
             name={option_id}
-            value={props.Fields[idx].options[option_id].value} 
+            value={props.fields[idx].options[option_id].value} 
             className="option_value"
             onChange={(e) => props.handleOptionChange(e,idx,option_id,"value")}
 

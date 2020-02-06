@@ -70,7 +70,7 @@ ReactDOM.render(
                 <Route exact path="/control" component={Control} theme={theme} />
                 <Route exact path="/control/form/:fid" component={ControlForm} theme={theme} />
                 <Route exact path="/control/form/:fid/response/:rid" component={ControlFormResponse} theme={theme} />
-                <Route exact path="/control" component={Admin} theme={theme} />
+                <Route exact path="/admin" component={Admin} theme={theme} />
             </Router>
         </RTL>
     </ThemeProvider>
