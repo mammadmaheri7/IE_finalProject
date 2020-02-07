@@ -193,12 +193,12 @@
     ```json
     {
         "status": "ok",
-        "message": "First Form updated successfuly.",
+        "message": "'First Form' submitted successfuly.",
     }
     ```
 
 
-## Retrive list of all responses to a single _form_ (Contains only location fields)
+## Retrive list of all responses to a single _form_
 
 * **Request**:
     + `GET`
@@ -251,7 +251,7 @@
     ```
 
 
-## Retrive details of a single _response_ to a single _form_ (Contains all fields)
+## Retrive details of a single _response_ to a single _form_
 
 * **Request**:
     + `GET`
