@@ -1,11 +1,36 @@
 const mongoose = require('mongoose');
 const Form = mongoose.model('forms');
+const Respond = mongoose.model('responds')
 
 const Counter = mongoose.model('counters');
 
 module.exports = (app) => {
-  app.post('/api/forms/submit',async(req,res)=>{
-    res.send("kasd;fj")
+  app.post('/api/forms/submit',async(req,res) => {
+    let respond = {}
+    respond.form_id = req.body.form_id
+    
+    value = await Counter.findOne({_id:"respondid"}).catch(err => {
+      console.log("error on finding id occured")
+    });
+    
+    temp = value.sequence_value
+    value.sequence_value = ++value.sequence_value;
+    await value.save()
+
+    respond._id = temp
+    respond.response = Object.assign({}, req.body.response)
+    //console.log(form.fields)
+    let x  = await Respond.create(respond).catch(err => {
+      return res.status(400).send({
+        "status": "error",
+        "message": "Error message",
+      })
+    });
+
+    return res.status(201).send({
+      "status": "ok",
+      "message": "submitted successfuly.",
+    })
   })
 
   app.get('/api/forms/:uid',async (req,res) => {
@@ -43,7 +68,6 @@ module.exports = (app) => {
 
   app.post(`/api/forms`, async (req, res) => {
     form = req.body
-    
 
     value = await Counter.findOne({_id:"formid"}).catch(err => {
       console.log("error on finding id occured")
