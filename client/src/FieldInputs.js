@@ -36,26 +36,34 @@ const FieldInputs = (props) => {
          <div>
          <label htmlFor={catId}>type</label>
          </div>
-          <input {...props}
-            type="text"
-            name={catId}
-            value={props.fields[idx].type} 
-            className="type"
-            onChange={props.onChange}
-
-          />
+         <select
+              {...props}
+              name={catId}
+              value={props.fields[idx].type}  
+                className="type"
+                onChange={props.onChange}
+              >
+                <option value="">Choose</option>
+                <option value="Text">Text</option>
+                <option value="Number">Number</option>
+                <option value="Date">Date</option>
+                <option value="Location">Location</option>
+              </select>
           <div>
           <label htmlFor={catId}>required</label>
           </div>
           <div>
-          <input {...props}
-            type="text"
-            name={catId}
-            value={props.fields[idx].required} 
-            className="required"
-            onChange={props.onChange}
-
-          />
+          <select
+              {...props}
+              name={catId}
+              value={props.fields[idx].required} 
+                className="required"
+                onChange={props.onChange}
+              >
+                <option value="">Choose</option>
+                <option value={true}>true</option>
+                <option value={false}>false</option>
+              </select>
           </div>
        
           

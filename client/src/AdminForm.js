@@ -3,8 +3,7 @@ import FieldInputs from "./FieldInputs"
 class AdminForm extends React.Component {
   state = {
     fields: [{name:"", title:"", type :"", required:""}],
-    title: "",
-    id: ""
+    title: ""
   }
   
   addOption = (idx) =>{
@@ -31,11 +30,15 @@ class AdminForm extends React.Component {
 
   onChange = (e) =>{
     let fields = [...this.state.fields]
-    console.log(fields)
+   // console.log(fields)
     fields[e.target.name][e.target.className] = e.target.value;
+    if(e.target.className === "required"){
+      let val = e.target.value === "true" ? true : false;
+    fields[e.target.name][e.target.className] = val;
+    }
     this.setState({ fields })
 
-    console.log(fields)
+    //console.log(fields)
 
 
   }
@@ -47,10 +50,11 @@ addCat = (e) => {
   }
 handleSubmit = (e) => {
    e.preventDefault()
+   console.log(this.state)
    if (this.props.onSubmit) this.props.onSubmit(this.state);
    }
 render() {
-    let {id, title, fields} = this.state
+    let {title, fields} = this.state
     return (
       <form 
       className="dynamic-form"
@@ -64,14 +68,7 @@ render() {
                       }}
                       className="form-control" type="text" name="title" id="title" value={title} />
           </div>
-          <div>
-          <label className="form-control" htmlFor="id">id</label> 
-          </div>
-          <div>
-          <input required = "true" onChange={e => {
-                        this.onStaticChange(e, "id")
-                      }} className="form-control" type="number" name="id" id="id" value={id} />
-          </div>
+
         <button className="btn btn-link" onClick={this.addCat}>Add new Field</button>
         <FieldInputs required = "true"
                     onChange={e => {
