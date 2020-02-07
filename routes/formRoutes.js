@@ -5,6 +5,81 @@ const Respond = mongoose.model('responds')
 const Counter = mongoose.model('counters');
 
 module.exports = (app) => {
+
+  app.get('/api/forms/:fid/responses/:rid',async(req,res) => {
+
+    let formId = req.params.fid
+    let reqId = req.params.rid
+
+    let result ={}
+    let form = await Form.findOne({_id:formId})
+    result.form_id = form._id
+
+    let respond = await Respond.findOne({_id : reqId})
+    //console.log(respond)
+    result.response_id = respond._id
+
+    let temp = []
+    temp = Object.values(form._doc.fields)
+    temp.forEach(element => {
+      element.value = respond.response[element.name]
+    });
+    result.fields = temp
+     
+    res.send(result)
+  })
+
+
+  app.get('/api/forms/:fid/responses',async(req,res) => {
+    let formId = req.params.fid
+    
+    let result = {}
+
+    let form = await Form.findOne({_id:formId})
+       
+    result.title = form.title
+    result.form_id = form._id
+    
+
+    //console.log(result.form_fields)
+
+    const t_con = Object.assign({}, form._doc.fields);
+    const con = Object.values(t_con).slice()
+
+    result.form_fields = con
+    //console.log(result.form_fields)
+
+    let responses = await Respond.find({form_id:formId})
+    //result.responses = responses
+    result.responses = []
+
+    responses.forEach(element => {
+      let temp = {}
+      temp.response_id = element._id
+     
+      let i = Object.assign({},con)
+      i = Object.values(i)
+      i.forEach(ant => {
+        //console.log("start")
+        let m = ant.name
+        console.log('-------------------')
+        //console.log(element.response.First_Name)
+        console.log(m)
+        console.log(element.response[m])
+        //console.log(element.response)
+        ant.value = element.response[m]
+      });
+      temp.fields = i
+      
+      result.responses.push(temp)
+      
+    });
+     
+    res.send(result)
+
+    
+  })
+
   app.post('/api/forms/submit',async(req,res) => {
     let respond = {}
     respond.form_id = req.body.form_id
@@ -19,6 +94,7 @@ module.exports = (app) => {
 
     respond._id = temp
     respond.response = Object.assign({}, req.body.response)
+    
     //console.log(form.fields)
     let x  = await Respond.create(respond).catch(err => {
       return res.status(400).send({
