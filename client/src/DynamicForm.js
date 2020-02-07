@@ -13,7 +13,7 @@ export default class DynamicForm extends React.Component {
     super(props);
     this.valueAvailable = this.props.valueAvailable;
     this.model = JSON.parse(this.props.model)
-    this.state.id = this.model.id;
+    this.state.id = this.model.form_id;
 
 
   }
@@ -39,8 +39,6 @@ export default class DynamicForm extends React.Component {
   }
 
   onSubmit = e => {
-      console.log("submit :    ", this.state.First_Name)
-      console.log("submit -2 :    ", new Date(JSON.parse(JSON.stringify(this.state.First_Name)))) 
     e.preventDefault();
     if (this.props.onSubmit) this.props.onSubmit(this.state);
   };
