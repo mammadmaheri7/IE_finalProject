@@ -3,7 +3,7 @@
 ## Insert a new _form_ to database:
 
 * **Request**:
-    + `PUT`
+    + `Post`
     + `/api/forms`
         ```json
         {
@@ -17,7 +17,7 @@
                     "required": true
                 }, 
                 {
-                    "name": "Loc" , 
+                    "name": "Your_Location" , 
                     "title": "Your Location" , 
                     "type": "Location",
                     "required": false
@@ -33,9 +33,9 @@
                     ] 
                 }, 
                 {
-                    "name": "Base_Location" , 
-                    "title": "Base Location" , 
-                    "type": "Location" , 
+                    "name": "Base_Location", 
+                    "title": "Base Location", 
+                    "type": "Location", 
                     "options":
                     [
                         {"label" : "Base1" , "value" : {"lat" : "1.2" , "long": "3.2"}}, 
@@ -151,12 +151,16 @@
             "form_id": "1",
             "response":
             {
-                "Key": "Value",
+                "First_Name": "...",
                 "Your_Location": {
                     "lat": "...",
                     "long": "...",
                 },
-                "Request_Type": "Water",
+                "Request_Type": "Information",
+                "Base_Location": {
+                    "lat" : "1.2" ,
+                    "long": "3.2"
+                },
                 .
                 .
                 .
