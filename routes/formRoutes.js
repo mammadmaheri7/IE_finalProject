@@ -4,8 +4,11 @@ const Form = mongoose.model('forms');
 const Counter = mongoose.model('counters');
 
 module.exports = (app) => {
+  app.post('/api/forms/submit',async(req,res)=>{
+    res.send("kasd;fj")
+  })
 
-  app.get('/api/:uid',async (req,res)=>{
+  app.get('/api/forms/:uid',async (req,res) => {
     
     let request_id = req.params.uid
     let result = {}

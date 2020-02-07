@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 // IMPORT MODELS
 require('./models/Product');
 require('./models/Form')
+require('./models/Counter')
 
 const app = express();
 
