@@ -4,6 +4,21 @@ const Form = mongoose.model('forms');
 const Counter = mongoose.model('counters');
 
 module.exports = (app) => {
+
+  app.get('/api/:uid',async (req,res)=>{
+    
+    let request_id = req.params.uid
+    let result = {}
+
+    let form = await Form.findOne({_id:request_id})
+       
+    result.title = form.title
+    result.form_id = form._id
+    result.fields = Object.values(form._doc.fields) 
+     
+     res.send(result)
+     
+  });
   
   app.get(`/api/forms`, async (req, res) => {
     let forms = await Form.find();
@@ -49,7 +64,27 @@ module.exports = (app) => {
       "status": "ok",
       "message": form.title+" inserted successfuly.",
     })
-  })
+  });
+
+  app.get(`/api/forms`, async (req, res) => {
+    let forms = await Form.find();
+    let response = []
+    forms.forEach(element => {
+      let temp = {}
+      
+      temp.title = element.title
+      temp.form_id = element._id
+      temp.url = "api/forms/"+ element._id
+      response.push(temp)
+    });
+    
+    let final = {}
+    final.forms = response
+    return res.status(200).send(final);
+  });
+
+
+  
 
   /*
   app.put(`/api/product/:id`, async (req, res) => { 

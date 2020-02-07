@@ -22,6 +22,8 @@ MongoClient.connect(url, function(err, db) {
 
 app.use(bodyParser.json());
 
+
+
 //IMPORT ROUTES
 require('./routes/productRoutes')(app);
 require('./routes/counterRoutes')(app);
