@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 
 // CSV
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 
 const themeTable = createMuiTheme({
     direction: 'rtl',
@@ -54,10 +54,6 @@ class ControlForm extends Component {
             form_id: null,
             form_fields: null,
             responses: null,
-            table: {
-                headers: [],
-                rows: []
-            },
             filter: {
                 options: [],
                 name: null, // Field name
@@ -72,191 +68,27 @@ class ControlForm extends Component {
 
     componentDidMount() {
 
-        // TODO:
-        // fetch responses
-        // fetch polygons
-
-        // fetch(`http://localhost:5000/api/forms/${fid}`)
-        //     .then(results => results.json())
-        //     .then(form => {
-        //         let new_form_info = { ...this.state.formInfo };
-        //         new_form_info.id = form.id;
-        //         new_form_info.title = form.title;
-        //         new_form_info.fields = form.fields;
-
-        //         this.setState({
-        //             formInfo: new_form_info,
-        //             ready: true
-        //         })
-        //     });
-
         let { fid } = this.props.match.params;
 
-        this.setState({
-            title: "First Form",
-            form_id: fid,
-            form_fields:
-                [
-                    {
-                        name: "Birth_Date",
-                        title: "Birth Date",
-                        type: "Date",
-                        required: true,
-                    },
-                    {
-                        name: "Number",
-                        title: "Number",
-                        type: "Number",
-                        required: true,
-                    },
-                    {
-                        name: "Request_Type",
-                        title: "Request Type",
-                        type: "Text",
-                        options:
-                            [
-                                { label: "Help", value: "Help" },
-                                { label: "Info", value: "Information" }
-                            ],
-                    },
-                    {
-                        name: "Home",
-                        title: "خانه",
-                        type: "Location",
-                    },
-                    {
-                        name: "Work",
-                        title: "محل کار",
-                        type: "Location",
-                    },
-                ],
-            responses:
-                [
-                    {
-                        response_id: 1,
-                        fields:
-                            [
-                                {
-                                    name: "Birth_Date",
-                                    title: "Birth Date",
-                                    type: "Date",
-                                    required: true,
-                                    value: "2020-02-18T20:30:00.000Z"
+        // fetch responses
+        fetch(`http://localhost:5000/api/forms/${fid}/responses`)
+            .then(
+                results => results.json(),
+                error => alert("ERR: " + error)
+            )
+            .then(json => {
+                console.log(json);
+                this.setState({
+                    title: json.title,
+                    form_id: json.form_id,
+                    form_fields: json.form_fields,
+                    responses: json.responses,
+                    ready: true,
+                })
+            });
 
-                                },
-                                {
-                                    name: "Number",
-                                    title: "Number",
-                                    type: "Number",
-                                    required: true,
-                                    value: "5"
-                                },
-                                {
-                                    name: "Request_Type",
-                                    title: "Request Type",
-                                    type: "Text",
-                                    options:
-                                        [
-                                            { label: "Help", value: "Help" },
-                                            { label: "Info", value: "Information" }
-                                        ],
-                                    value: "\"Help\""
-                                },
-                                {
-                                    name: "Home",
-                                    title: "خانه",
-                                    type: "Location",
-                                    // label: "خیابان شریعتی",
-                                    value: {
-                                        "lat": 35.618974646696394,
-                                        "long": 51.36702734375001
-                                    },
-                                },
-                                {
-                                    name: "Work",
-                                    title: "محل کار",
-                                    type: "Location",
-                                    label: "خیابان اندرزگو",
-                                    value: {
-                                        "lat": 55.618974646696394,
-                                        "long": 61.36702734375001
-                                    },
-                                },
-                            ],
-                    },
-                    {
-                        response_id: 2,
-                        fields:
-                            [
-                                {
-                                    name: "Birth_Date",
-                                    title: "Birth Date",
-                                    type: "Date",
-                                    required: true,
-                                    value: "2020-02-18T20:30:00.000Z"
-
-                                },
-                                {
-                                    name: "Number",
-                                    title: "Number",
-                                    type: "Number",
-                                    required: true,
-                                    value: "3"
-
-                                },
-                                {
-                                    name: "Request_Type",
-                                    title: "Request Type",
-                                    type: "Text",
-                                    options:
-                                        [
-                                            { label: "Help", value: "Help" },
-                                            { label: "Info", value: "Information" }
-                                        ],
-                                    value: "\"Help\""
-                                },
-                                {
-                                    name: "Home",
-                                    title: "خانه",
-                                    type: "Location",
-                                    label: "خیابان 1",
-                                    value: {
-                                        "lat": 35.618974646696394,
-                                        "long": 51.36702734375001
-                                    },
-                                },
-                                {
-                                    name: "Work",
-                                    title: "محل کار",
-                                    type: "Location",
-                                    label: "خیابان 2",
-                                    value: {
-                                        "lat": 55.618974646696394,
-                                        "long": 61.36702734375001
-                                    },
-                                },
-                            ],
-                    },
-                ]
-            ,
-            polygons:
-                [
-                    {
-                        polygon_id: 1,
-                        name: "تهران",
-                    },
-                    {
-                        polygon_id: 2,
-                        name: "مشهد",
-                    },
-                    {
-                        polygon_id: 3,
-                        name: "شیراز",
-                    },
-                ],
-            ready: true,
-        });
-
+        // TODO:
+        // fetch polygons
 
     }
 
@@ -468,23 +300,23 @@ class ControlForm extends Component {
 
             // Conver summations to MaterialUi Components
             let sumCells = sumVals.map(sum => (
-                <TableCell align="left" style={{color: "white"}}>
+                <TableCell align="left" style={{ color: "white" }}>
                     {sum === 0 ? '-' : sum}
                 </TableCell>
             ));
             sumCells.unshift(
-                <TableCell align="left" style={{color: "white"}}>
+                <TableCell align="left" style={{ color: "white" }}>
                     <b>
-                    مجموع:
+                        مجموع:
                     </b>
                 </TableCell>
             );
 
             // Add sum row to table
             tableRows.push(
-                    <TableRow hover={false} style={{cursor: "default", backgroundColor: "#222f3e"}}>
-                        {sumCells}
-                    </TableRow>
+                <TableRow hover={false} style={{ cursor: "default", backgroundColor: "#222f3e" }}>
+                    {sumCells}
+                </TableRow>
             );
 
 
@@ -562,12 +394,12 @@ class ControlForm extends Component {
                         <TableContainer component={Paper}>
                             <Table>
                                 <TableHead>
-                                    <TableRow style={{backgroundColor: "#222f3e"}}>
-                                        <TableCell component="th" scope="row" key="id" style={{color: "white"}}>
+                                    <TableRow style={{ backgroundColor: "#222f3e" }}>
+                                        <TableCell component="th" scope="row" key="id" style={{ color: "white" }}>
                                             شماره پاسخ
                                             </TableCell>
                                         {headers.map(col => (
-                                            <TableCell component="th" scope="row" key={col} style={{color: "white"}}>
+                                            <TableCell component="th" scope="row" key={col} style={{ color: "white" }}>
                                                 {col}
                                             </TableCell>
                                         ))}

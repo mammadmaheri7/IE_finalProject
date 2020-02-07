@@ -26,88 +26,68 @@ class FieldForm extends Component {
     componentDidMount() {
 
         let { fid } = this.props.match.params;
+        fetch(`http://localhost:5000/api/forms/${fid}`)
+            .then(
+                (results) => results.json(),
+                (error) => alert("ERR: " + error)
+            )
+            .then(form => {
 
-        // fetch(`http://localhost:3001/api/forms/${fid}`)
-        //     .then(results => results.json())
-        //     .then(form => {
-        //         let new_form_info = { ...this.state.formInfo };
-        //         new_form_info.id = form.id;
-        //         new_form_info.title = form.title;
-        //         new_form_info.fields = form.fields;
+                this.setState({
+                    formInfo: {
+                        form_id: form.form_id,
+                        title: form.title,
+                        fields: form.fields,
+                    },
+                    formReady: true
+                });
 
-        //         this.setState({
-        //             formInfo: new_form_info,
-        //             formReady: true
-        //         })
-        //     });
-
-
-        this.setState({
-            formInfo: {
-                title: "First Form" , 
-                form_id: fid, 
-                fields:
-                [
-                    {
-                        name:"First_Name" , 
-                        title: "First Name" , 
-                        type: "Text",
-                        required: true
-                    }, 
-                    {
-                        name: "Loc" , 
-                        title: "Your Location" , 
-                        type: "Location",
-                        required: false
-                    }, 
-                    {
-                        name: "Request_Type" , 
-                        title: "Request Type" , 
-                        type: "Text" , 
-                        options:
-                        [
-                            {label : "Help" , value : "Help"}, 
-                            {label : "Info" , value : "Information"} 
-                        ] 
-                    } , 
-                    {
-                        name:"Base_Location" , 
-                        title : "Base Location" , 
-                        type : "Location" , 
-                        options:
-                        [
-                            {label : "Base1" , value : {lat : "1.2" , long: "3.2"}}, 
-                            {label : "Base2" , value : {lat : "2.3" , long : "1.434" }} 
-                        ] 
-                    } 
-                ] 
             },
-            formReady: true,
-        });
-
+            () => alert("Error on receiving respond from server.")
+        );
 
     }
 
 
-    handleSubmit(json) {
+    handleSubmit(model) {
         let submit_body = {
-            form_id: this.form_id,
-            response: json
+            form_id: this.state.formInfo.form_id,
+            response: model
         }
+        
+        console.log(submit_body);
 
-        fetch('http://localhost:5000/api/form/submit', {
+        fetch('http://localhost:5000/api/forms/submit', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: submit_body
+            body: JSON.stringify(submit_body)
         })
-        .then((results) => results.json(), () => alert("ERROR!"))
-        .then((json) => {
-            alert(json.message); // shows message
-            window.location.href = "../"; // redirects to ./
-        });
+        .then(
+            (results) => results.json(),
+            (error) => alert("ERR: " + error)
+        )
+        .then(
+            (json) => {
+                if(json.status === "ok")
+                {
+                    alert(json.message);
+                    window.location.href = "../"; // redirect
+                }
+                else if(json.status === "error")
+                {
+                    json.errors.forEach(error => {
+                        alert(error.message);
+                    });   
+                }
+                else {
+                    window.location.href = "../"; // redirect
+                }
+            },
+            () => alert("Error on receiving respond from server.")
+        );
     }
 
 

@@ -20,36 +20,15 @@ class Control extends Component {
 
     componentDidMount() {
 
-        /*
-         * TODO: Connect to Back-end
-         */ 
-        // fetch(`http://localhost:5000/api/forms`)
-        //     .then(results => results.json())
-        //     .then(json => {
-        //         let forms = json.forms;
-        //         this.setState({
-        //             forms: forms,
-        //             formsReady: true
-        //         })
-        //     })
-
-
-        this.setState({
-            forms:
-            [
-                {
-                    "title":"فرم اول" , 
-                    "form_id": "1" , 
-                    "url": "/api/forms/1"                     
-                },
-                {
-                    "title":"فرم دوم" , 
-                    "form_id": "2" , 
-                    "url": "/api/forms/2"                     
-                },
-            ],
-            formsReady: true
-        })
+        fetch(`http://localhost:5000/api/forms`)
+            .then(results => results.json())
+            .then(json => {
+                let forms = json.forms;
+                this.setState({
+                    forms: forms,
+                    formsReady: true
+                })
+            })
             
     }
 
