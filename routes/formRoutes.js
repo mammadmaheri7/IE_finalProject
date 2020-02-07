@@ -5,6 +5,53 @@ const Respond = mongoose.model('responds')
 const Counter = mongoose.model('counters');
 
 module.exports = (app) => {
+  app.get('/api/forms/:fid/responses',async(req,res) => {
+    let formId = req.params.fid
+    
+    let result = {}
+
+    let form = await Form.findOne({_id:formId})
+       
+    result.title = form.title
+    result.form_id = form._id
+    
+
+    //console.log(result.form_fields)
+
+    const t_con = Object.assign({}, form._doc.fields);
+    const con = Object.values(t_con).slice()
+
+    result.form_fields = con
+    console.log(result.form_fields)
+
+    let responses = await Respond.find({form_id:formId})
+    //result.responses = responses
+    result.responses = []
+
+    responses.forEach(element => {
+      let temp = {}
+      temp.response_id = element._id
+      /*
+      con.forEach(element => {
+        element.value = "annnn"
+      });
+      */
+      let i = Object.assign({},con)
+      i = Object.values(i)
+      i.forEach(element => {
+        element.value="asdf"
+      });
+      temp.fields = i
+      
+      result.responses.push(temp)
+      
+    });
+     
+    res.send(result)
+
+    
+  })
+
   app.post('/api/forms/submit',async(req,res) => {
     let respond = {}
     respond.form_id = req.body.form_id
