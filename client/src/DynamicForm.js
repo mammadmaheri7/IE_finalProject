@@ -92,7 +92,7 @@ export default class DynamicForm extends React.Component {
     else if(type === "LocationOption"){
       this.setState(
         {
-          [key]:{ label : text  ,value: JSON.parse(e.target.value) }
+          [key]:{ label : text  ,value: Object.assign(JSON.parse(e.target.value), {label: text}) }
         },
         () => {}
       );
