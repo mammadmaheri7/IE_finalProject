@@ -54,6 +54,21 @@ class ControlForm extends Component {
             form_id: null,
             form_fields: null,
             responses: null,
+            polygons:
+            [
+                {
+                    polygon_id: 1,
+                    name: "تهران" 
+                },
+                {
+                    polygon_id: 2,
+                    name: "یزد" 
+                },
+                {
+                    polygon_id: 3,
+                    name: "مشهد" 
+                },
+            ],
             filter: {
                 options: [],
                 name: null, // Field name
@@ -77,7 +92,7 @@ class ControlForm extends Component {
                 error => alert("ERR: " + error)
             )
             .then(json => {
-                console.log(json);
+                // console.log(json);
                 this.setState({
                     title: json.title,
                     form_id: json.form_id,
@@ -88,7 +103,7 @@ class ControlForm extends Component {
             });
 
         // TODO:
-        // fetch polygonsd
+        // fetch polygons
 
     }
 
@@ -127,75 +142,161 @@ class ControlForm extends Component {
         });
     }
 
+    handleNumberEQFilter = event => {
+        this.setState({
+            filter: {
+                ...this.state.filter,
+                value: event.target.value
+            }
+        });
+    }
+
+    handleNumberGTFilter = event => {
+        this.setState({
+            filter: {
+                ...this.state.filter,
+                gt: event.target.value
+            }
+        });
+    }
+
+    handleNumberLTFilter = event => {
+        this.setState({
+            filter: {
+                ...this.state.filter,
+                lt: event.target.value
+            }
+        });
+    }
+
+    handlePolygonFilter = event => {
+        this.setState({
+            filter: {
+                ...this.state.filter,
+                value: event.target.value
+            }
+        })
+    }
+
+
     applyFilter = event => {
         this.setState({
             ready: false
         })
 
-        // TODO: API Call to apply filter with query according to filter type
+        // API Call to apply filter with query according to filter type
+        let query = "http://localhost:5000";
+        switch (this.state.filter.type) {
+            case "Location":
+                query += `/api/forms/${this.state.form_id}/responses/filter/?field=${this.state.filter.name}&polygon_id=${this.state.filter.value}`;
+                break;
+
+            case "Text":
+                query += `/api/forms/${this.state.form_id}/responses/filter/?field=${this.state.filter.name}&eq=${this.state.filter.value}`;
+                break;
+
+            case "Number":
+                query += `/api/forms/${this.state.form_id}/responses/filter/?field=${this.state.filter.name}&lt=${this.state.filter.lt}&gt=${this.state.filter.gt}&eq=${this.state.filter.value}`;
+                break
+        
+            case "Date":
+                query += `/api/forms/${this.state.form_id}/responses/filter/?field=${this.state.filter.name}&lt=${this.state.filter.lt}&gt=${this.state.filter.gt}&eq=${this.state.filter.value}`;
+                break
+        
+
+            default:
+                break;
+        }
+
+
+        console.log(query);
+
+        fetch(query)
+            .then(
+                results => results.json(),
+                error => alert("ERR: " + error)
+            )
+            .then(json => {
+                this.setState({
+                    title: json.title,
+                    form_id: json.form_id,
+                    responses: json.responses,
+                    ready: true,
+                })
+            });
+
 
         // response 1 deleted for example
-        this.setState({
-            responses:
-                [
-                    {
-                        response_id: 2,
-                        fields:
-                            [
-                                {
-                                    name: "Birth_Date",
-                                    title: "Birth Date",
-                                    type: "Date",
-                                    required: true,
-                                    value: "2020-02-18T20:30:00.000Z"
+        // this.setState({
+        //     responses:
+        //         [
+        //             {
+        //                 response_id: 2,
+        //                 fields:
+        //                     [
+        //                         {
+        //                             name: "Birth_Date",
+        //                             title: "Birth Date",
+        //                             type: "Date",
+        //                             required: true,
+        //                             value: "2020-02-18T20:30:00.000Z"
 
-                                },
-                                {
-                                    name: "Number",
-                                    title: "Number",
-                                    type: "Number",
-                                    required: true,
-                                    value: "3"
+        //                         },
+        //                         {
+        //                             name: "Number",
+        //                             title: "Number",
+        //                             type: "Number",
+        //                             required: true,
+        //                             value: "3"
 
-                                },
-                                {
-                                    name: "Request_Type",
-                                    title: "Request Type",
-                                    type: "Text",
-                                    options:
-                                        [
-                                            { label: "Help", value: "Help" },
-                                            { label: "Info", value: "Information" }
-                                        ],
-                                    value: "\"Help\""
-                                },
-                                {
-                                    name: "Home",
-                                    title: "خانه",
-                                    type: "Location",
-                                    label: "خیابان 1",
-                                    value: {
-                                        "lat": 35.618974646696394,
-                                        "long": 51.36702734375001
-                                    },
-                                },
-                                {
-                                    name: "Work",
-                                    title: "محل کار",
-                                    type: "Location",
-                                    label: "خیابان 2",
-                                    value: {
-                                        "lat": 55.618974646696394,
-                                        "long": 61.36702734375001
-                                    },
-                                },
-                            ],
-                    },
-                ],
-            ready: true,
-        })
+        //                         },
+        //                         {
+        //                             name: "Request_Type",
+        //                             title: "Request Type",
+        //                             type: "Text",
+        //                             options:
+        //                                 [
+        //                                     { label: "Help", value: "Help" },
+        //                                     { label: "Info", value: "Information" }
+        //                                 ],
+        //                             value: "\"Help\""
+        //                         },
+        //                         {
+        //                             name: "Home",
+        //                             title: "خانه",
+        //                             type: "Location",
+        //                             label: "خیابان 1",
+        //                             value: {
+        //                                 "lat": 35.618974646696394,
+        //                                 "long": 51.36702734375001
+        //                             },
+        //                         },
+        //                         {
+        //                             name: "Work",
+        //                             title: "محل کار",
+        //                             type: "Location",
+        //                             label: "خیابان 2",
+        //                             value: {
+        //                                 "lat": 55.618974646696394,
+        //                                 "long": 61.36702734375001
+        //                             },
+        //                         },
+        //                     ],
+        //             },
+        //         ],
+        //     ready: true,
+        // })
     }
 
+    
+    countTableFields = fields => {
+        let x = 0;
+        fields.forEach(field => {
+            if(field.type === "Location" || field.type === "Number")
+                x++;
+        });
+        return x;
+    }
 
     render() {
         if (!this.state.ready) // Loading Progress Bar
@@ -244,7 +345,7 @@ class ControlForm extends Component {
 
             // Build Rows in MaterialUI Components
             let tableRows = [];
-            let sumVals = new Array(form_fields.length).fill(0);
+            let sumVals = new Array(this.countTableFields(form_fields)).fill(0);
 
             rows.forEach(row => {
                 let rowCells = [];
@@ -298,7 +399,7 @@ class ControlForm extends Component {
             });
 
 
-            // Conver summations to MaterialUi Components
+            // Convert summations to MaterialUi Components
             let sumCells = sumVals.map(sum => (
                 <TableCell align="left" style={{ color: "white" }}>
                     {sum === 0 ? '-' : sum}
@@ -329,7 +430,7 @@ class ControlForm extends Component {
                             <InputLabel ref="" id="demo-simple-select-outlined-label">
                                 در منطقه:
                             </InputLabel>
-                            <Select name="area" autoWidth={true}>
+                            <Select name="area" autoWidth={true} onChange={(e) => this.handlePolygonFilter(e)}>
                                 {this.state.polygons.map(poly => (
                                     <MenuItem selected={this.state.filter.area === poly.polygon_id} value={poly.polygon_id}>{poly.name}</MenuItem>
                                 ))}
@@ -347,6 +448,41 @@ class ControlForm extends Component {
                         <br /><br />
                     </div>
             }
+            else if (this.state.filter.type === "Number") {
+                filter_details =
+                    <div>
+                        <FormControl>
+                            <TextField id="standard-basic" label="بزرگ تر از" name="text" onChange={(e) => this.handleNumberGTFilter(e)} />
+                        </FormControl>
+                        <br />
+                        <FormControl>
+                            <TextField id="standard-basic" label="کوچک تر از" name="text" onChange={(e) => this.handleNumberLTFilter(e)} />
+                        </FormControl>
+                        <br />
+                        <FormControl>
+                            <TextField id="standard-basic" label="مساوی" name="text" onChange={(e) => this.handleNumberEQFilter(e)} />
+                        </FormControl>
+                        <br /><br />
+                    </div>
+            }
+            else if (this.state.filter.type === "Date") {
+                filter_details =
+                    <div>
+                        <FormControl>
+                            <TextField id="standard-basic" label="بزرگ تر از" name="text" onChange={(e) => this.handleNumberGTFilter(e)} />
+                        </FormControl>
+                        <br />
+                        <FormControl>
+                            <TextField id="standard-basic" label="کوچک تر از" name="text" onChange={(e) => this.handleNumberLTFilter(e)} />
+                        </FormControl>
+                        <br />
+                        <FormControl>
+                            <TextField id="standard-basic" label="مساوی" name="text" onChange={(e) => this.handleNumberEQFilter(e)} />
+                        </FormControl>
+                        <br /><br />
+                    </div>
+            }
+
 
 
             // CSV Download now
