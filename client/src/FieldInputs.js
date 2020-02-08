@@ -27,7 +27,7 @@ const createOptions = (props, idx) =>{
       <input {...props}
       type="Text"
       name={option_id}
-      value={props.fields[idx].options[option_id].value.lat} 
+      value={(props.fields[idx].options[option_id].value.latShow)} 
       className="option_value"
       onChange={(e) => props.handleOptionChange(e,idx,option_id,"lat")}
 
@@ -36,9 +36,12 @@ const createOptions = (props, idx) =>{
       <input {...props}
       type="Text"
       name={option_id}
-      value={props.fields[idx].options[option_id].value.long} 
+      value={(props.fields[idx].options[option_id].value.longShow)} 
       className="option_value"
-      onChange={(e) => props.handleOptionChange(e,idx,option_id,"long")}
+      onChange={(e) =>{
+        return props.handleOptionChange(e,idx,option_id,"long")
+              }
+    }
 
       />
       </div>

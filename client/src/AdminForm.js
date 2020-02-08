@@ -29,8 +29,15 @@ class AdminForm extends React.Component {
 
   handleOptionChange = (e,idx,option_id,item) =>{
     let fields = [...this.state.fields]
-    if(fields[idx].type === "Location" && (item ==="lat" || item === "long"))
-      fields[idx].options[option_id].value[item] = e.target.value
+    if(fields[idx].type === "Location" && (item ==="lat" || item === "long")){
+      fields[idx].options[option_id].value[item] = parseFloat(e.target.value)
+      let itemShow = (' ' + item).slice(1);
+      itemShow = itemShow.concat("Show")
+      fields[idx].options[option_id].value[itemShow] = (e.target.value)
+    }
+    else if(fields[idx].type === "Number" && item ==="value"){
+      fields[idx].options[option_id][item] = parseInt(e.target.value);
+    }
     else
       fields[idx].options[option_id][item] = e.target.value;
 
@@ -51,7 +58,6 @@ class AdminForm extends React.Component {
 
   onChange = (e) =>{
     let fields = [...this.state.fields]
-   // console.log(fields)
     fields[e.target.name][e.target.className] = e.target.value;
     if(e.target.className === "required"){
       let val = e.target.value === "true" ? true : false;
@@ -62,7 +68,6 @@ class AdminForm extends React.Component {
     }
     this.setState({ fields })
 
-    //console.log(fields)
 
 
   }
@@ -74,7 +79,6 @@ addCat = (e) => {
   }
 handleSubmit = (e) => {
    e.preventDefault()
-   console.log(this.state)
    if (this.props.onSubmit) this.props.onSubmit(this.state);
    }
 render() {
