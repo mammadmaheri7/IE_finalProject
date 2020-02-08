@@ -12,6 +12,8 @@ module.exports = (app) => {
     let formId = req.params.fid
     let field = req.query.field
     let eq = req.query.eq
+    let gt = req.query.gt
+    let lt = req.query.lt
     let polygon_id = req.query.polygon_id
 
     let polygon = await Polygon.findOne({_id:polygon_id})
@@ -30,6 +32,12 @@ module.exports = (app) => {
           if(eq != undefined)
           {
             if(br.response[field] == eq){
+              responses.push(br)
+            }
+            
+          }
+          else if(gt!=undefined || lt!=undefined){
+            if(gt>= br.response[field] && lt<= br.response[field]){
               responses.push(br)
             }
           }
