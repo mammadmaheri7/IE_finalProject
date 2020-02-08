@@ -7,6 +7,68 @@ const Counter = mongoose.model('counters');
 const inside = require('point-in-polygon')
 
 module.exports = (app) => {
+  app.get('/api/forms/:fid/responses/customFilter',async(req,res) => {
+    let result = {}
+    let formId = req.params.fid
+    let field = req.query.field
+    let eq = req.query.eq
+    let polygon_id = req.query.polygon_id
+
+    let polygon = await Polygon.findOne({_id:polygon_id})
+
+    let form = await Form.findOne({_id:formId})
+    result.title = form.title
+    result.form_id = form._id
+    result.responses = []
+
+    let basic_responses = await Respond.find({form_id:formId})
+      let responses = []
+
+      basic_responses.forEach(br => {
+        if(field in br.response)
+        {
+          if(eq != undefined)
+          {
+            if(br.response[field] == eq){
+              responses.push(br)
+            }
+          }
+          /*
+          if(inside([br.response[field].long, br.response[field].lat], polygon.geometry.coordinates[0]) ) {
+            responses.push(br)
+          }
+          */
+        }
+        
+      });
+  
+      const t_con = Object.assign({}, form._doc.fields);
+      const con = Object.values(t_con).slice()
+
+      responses.forEach(element => {
+          let temp = {};
+          temp.response_id = element._id;
+
+          let reponse_fields_temp = JSON.parse(JSON.stringify(con));
+          reponse_fields = Object.values(reponse_fields_temp).slice();
+
+          reponse_fields.forEach(field => {
+              field.value = element.response[field.name];
+          });
+
+          temp.fields = reponse_fields;
+
+          result.responses.push(temp);
+      });
+
+    return res.send(result) 
+    
+  })
+
+  //===========================
+
+
+  
     app.get('/api/forms/:fid/responses/filter',async(req,res) => {
       let result = {}
       let formId = req.params.fid
@@ -14,7 +76,6 @@ module.exports = (app) => {
       let polygon_id = req.query.polygon_id
 
       let polygon = await Polygon.findOne({_id:polygon_id})
-      console.log(polygon)
 
       let form = await Form.findOne({_id:formId})
       result.title = form.title
@@ -55,7 +116,7 @@ module.exports = (app) => {
 
       return res.send(result) 
       
-    })
+    }),
     app.get('/api/forms/:fid/responses/:rid', async (req, res) => {
 
         let formId = req.params.fid
