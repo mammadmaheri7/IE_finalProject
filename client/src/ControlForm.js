@@ -188,15 +188,15 @@ class ControlForm extends Component {
                 break;
 
             case "Text":
-                query += `/api/forms/${this.state.form_id}/responses/filter/?field=${this.state.filter.name}&eq=${this.state.filter.value}`;
+                query += `/api/forms/${this.state.form_id}/responses/customFilter/?field=${this.state.filter.name}&eq=${this.state.filter.value}`;
                 break;
 
             case "Number":
-                query += `/api/forms/${this.state.form_id}/responses/filter/?field=${this.state.filter.name}&lt=${this.state.filter.lt}&gt=${this.state.filter.gt}&eq=${this.state.filter.value}`;
+                query += `/api/forms/${this.state.form_id}/responses/customFilter/?field=${this.state.filter.name}&lt=${this.state.filter.lt}&gt=${this.state.filter.gt}&eq=${this.state.filter.value}`;
                 break
 
             case "Date":
-                query += `/api/forms/${this.state.form_id}/responses/filter/?field=${this.state.filter.name}&lt=${this.state.filter.lt}&gt=${this.state.filter.gt}&eq=${this.state.filter.value}`;
+                query += `/api/forms/${this.state.form_id}/responses/customFilter/?field=${this.state.filter.name}&lt=${this.state.filter.lt}&gt=${this.state.filter.gt}&eq=${this.state.filter.value}`;
                 break
 
 
@@ -405,16 +405,16 @@ class ControlForm extends Component {
             else if (this.state.filter.type === "Date") {
                 filter_details =
                     <div>
-                        <FormControl>
+                        {/* <FormControl>
                             <TextField id="standard-basic" label="بزرگ تر از" name="text" onChange={(e) => this.handleNumberGTFilter(e)} />
                         </FormControl>
                         <br />
                         <FormControl>
                             <TextField id="standard-basic" label="کوچک تر از" name="text" onChange={(e) => this.handleNumberLTFilter(e)} />
                         </FormControl>
-                        <br />
+                        <br /> */}
                         <FormControl>
-                            <TextField id="standard-basic" label="مساوی" name="text" onChange={(e) => this.handleNumberEQFilter(e)} />
+                            <TextField id="standard-basic" label="دارای" name="text" onChange={(e) => this.handleNumberEQFilter(e)} />
                         </FormControl>
                         <br /><br />
                     </div>

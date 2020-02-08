@@ -27,17 +27,19 @@ module.exports = (app) => {
       let responses = []
 
       basic_responses.forEach(br => {
+
         if(field in br.response)
         {
-          if(eq != undefined)
+          if(eq !== "null")
           {
             if((""+br.response[field]).includes(eq)){
               responses.push(br)
             }
             
           }
-          else if(gt!=undefined || lt!=undefined){
-            if(gt>= br.response[field] && lt<= br.response[field]){
+          
+          else if(gt!== "null" || lt!== "null"){
+            if(gt<= br.response[field] && lt>= br.response[field]){
               responses.push(br)
             }
           }
