@@ -11,7 +11,8 @@ class Admin extends Component {
 
 
         fetch('https://ie-final-proj.herokuapp.com/api/forms/', {
-            method: 'POST',
+        // fetch('http://localhost:5000/api/forms/', {
+                method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
