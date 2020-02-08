@@ -27,7 +27,6 @@ class Control extends Component {
                 error => alert("ERR: " + error)
             )
             .then(json => {
-                console.log(json);
                 this.setState({
                     responseInfo: json,
                     ready: true,

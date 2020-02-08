@@ -95,7 +95,6 @@ class ControlForm extends Component {
                 error => alert("ERR: " + error)
             )
             .then(json => {
-                console.log(json.polygons);
                 this.setState({
                     polygons: json.polygons
                 })
@@ -292,8 +291,6 @@ class ControlForm extends Component {
                 // data rows
                 row.values.forEach((val, index) => {
                     let rowCell = null;
-
-                    console.log(val);
 
                     if (val.type === "Location") {
                         if (val.value.label !== undefined) {

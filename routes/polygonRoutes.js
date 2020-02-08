@@ -28,7 +28,6 @@ module.exports = (app) => {
         
     })  
 
-    console.log("sadfasf")
     return res.status(200).send("dasf")
   }),
 

@@ -22,9 +22,7 @@ const MyMap = withScriptjs(withGoogleMap(props =>{
 export class MapContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        }
-        // console.log(typeof this.state.lat)
+        this.state = {}
     }
 
     render() {
