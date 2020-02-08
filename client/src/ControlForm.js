@@ -358,7 +358,7 @@ class ControlForm extends Component {
                 filter_details =
                     <div>
                         <FormControl>
-                            <InputLabel ref="" id="demo-simple-select-outlined-label">
+                            <InputLabel id="demo-simple-select-outlined-label">
                                 در منطقه:
                             </InputLabel>
                             <Select name="area" autoWidth={true} onChange={(e) => this.handlePolygonFilter(e)}>
@@ -490,7 +490,7 @@ class ControlForm extends Component {
                             <MuiThemeProvider theme={themeForm}>
 
                                 <FormControl>
-                                    <InputLabel ref="" id="demo-simple-select-outlined-label">
+                                    <InputLabel id="demo-simple-select-outlined-label">
                                         بر اساس:
                                     </InputLabel>
                                     <Select
