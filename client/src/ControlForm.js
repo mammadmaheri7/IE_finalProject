@@ -296,11 +296,13 @@ class ControlForm extends Component {
                 row.values.forEach((val, index) => {
                     let rowCell = null;
 
+                    console.log(val);
+
                     if (val.type === "Location") {
-                        if (val.label !== undefined) {
+                        if (val.value.label !== undefined) {
                             rowCell =
                                 <TableCell align="left" key={row.response_id + "_" + val.name}>
-                                    {val.label}
+                                    {val.value.label}
                                 </TableCell>
                         }
                         else {

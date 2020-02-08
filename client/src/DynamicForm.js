@@ -231,13 +231,21 @@ export default class DynamicForm extends React.Component {
             if(type ==="Number"){
               typeToSend = "Number";
             }
-            if(value !== undefined){
-              value.label = undefined;
+            let jsonValue = undefined;
+            try{
+              jsonValue = JSON.parse(value);
+            }catch{
+
             }
+            if(jsonValue !== undefined){
+              jsonValue.label = undefined;
+              value = JSON.stringify(jsonValue);
+            }
+            console.log(value);
             input = (
               <select
               {...props}
-                value={value !== undefined ? value.value : value}
+                value={value instanceof Object ? value.value : value}
                 onChange={e => {
                   this.onChange(e, key, typeToSend, true );
                 }}
