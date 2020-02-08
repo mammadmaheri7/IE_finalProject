@@ -29,31 +29,24 @@ module.exports = (app) => {
             "status": "error",
             "message": "Error message",
         })
-    })
-
-
-
-    
-
-    
+    })  
   })
 
-  app.get('/api/polygons/',  async(req,res) => {
-      
+  app.get('/api/polygons/',  async(req,res) => {     
     let lat = req.query.lat
     let long = req.query.long
     result = {
         polygons : []
-    }
-    
+    }  
     let pols = await Polygon.find();
-
     pols.forEach(element => {    
             result.polygons.push(element.properties)
     });
-
     return res.status(200).send(result) ;
   })
+
+
+  
 
 
 
