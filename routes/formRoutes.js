@@ -31,7 +31,7 @@ module.exports = (app) => {
         {
           if(eq != undefined)
           {
-            if(br.response[field].includes(eq)){
+            if((""+br.response[field]).includes(eq)){
               responses.push(br)
             }
             
