@@ -79,7 +79,6 @@ class ControlForm extends Component {
                 error => alert("ERR: " + error)
             )
             .then(json => {
-                console.log(json);
                 this.setState({
                     title: json.title,
                     form_id: json.form_id,
@@ -203,8 +202,6 @@ class ControlForm extends Component {
             default:
                 break;
         }
-
-        console.log(query);
 
         fetch(query)
             .then(
