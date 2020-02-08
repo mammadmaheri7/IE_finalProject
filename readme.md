@@ -268,9 +268,9 @@
                     "name": "Home", 
                     "title": "Home", 
                     "type": "Location", 
-                    "label": "Location Label",
                     "value":
                         {
+                            "label": "Location Label",
                             "lat": "1.2",
                             "long": "3.2",
                         },

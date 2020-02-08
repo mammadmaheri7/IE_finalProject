@@ -8,17 +8,38 @@ class AdminForm extends React.Component {
   
   addOption = (idx) =>{
     let fields = [...this.state.fields]
-    if(fields[idx].options === undefined)
-    fields[idx].options = []
-    fields[idx].options.push({label:"", value:""})
+    if(fields[idx].options === undefined){
+      fields[idx].options = []
+    }
+    if(fields[idx].type === "Location"){
+      let newOption = {}
+      newOption.label = ""
+      newOption.value = {}
+      newOption.value.lat = ""
+      newOption.value.long = ""
+      fields[idx].options.push(newOption)
+    }else{
+      fields[idx].options.push({label:"", value:""})
+    }
     this.setState({ fields })
 
 
   }
 
+
   handleOptionChange = (e,idx,option_id,item) =>{
     let fields = [...this.state.fields]
-    fields[idx].options[option_id][item] = e.target.value;
+    if(fields[idx].type === "Location" && (item ==="lat" || item === "long"))
+      fields[idx].options[option_id].value[item] = e.target.value
+    else
+      fields[idx].options[option_id][item] = e.target.value;
+
+    // if(fields[idx].type === "Location" && item === "value"){
+    //   try{
+    //     fields[idx].options[option_id][item] = JSON.parse(e.target.value);
+    //   }catch(e){
+    //   }
+    // }
     this.setState({ fields })
 
   }
@@ -35,6 +56,9 @@ class AdminForm extends React.Component {
     if(e.target.className === "required"){
       let val = e.target.value === "true" ? true : false;
     fields[e.target.name][e.target.className] = val;
+    }
+    if(e.target.className === "type"){
+      fields[e.target.name].options = undefined;
     }
     this.setState({ fields })
 

@@ -106,3 +106,7 @@ code {
 .csv-dl:hover {
 	background-color: #fff7d9;
 }
+
+.form-label {
+	text-align: right !important;
+}

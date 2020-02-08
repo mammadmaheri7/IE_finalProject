@@ -55,8 +55,6 @@ class FieldForm extends Component {
             response: model
         }
         
-        console.log(submit_body);
-
         fetch('http://localhost:5000/api/forms/submit', {
             method: 'POST',
             headers: {
@@ -102,7 +100,7 @@ class FieldForm extends Component {
         {
             return (
                 <Container>
-                    <h2 className="form-title">{this.state.formInfo.title}</h2>
+                    <h2>{this.state.formInfo.title}</h2>
                     
                     <Button variant="contained" color="primary" href="/field">
                         « برگشت
