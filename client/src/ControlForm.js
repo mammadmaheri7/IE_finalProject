@@ -207,12 +207,12 @@ class ControlForm extends Component {
         else {
 
             const responses = this.state.responses.slice();
-            const sample_response = responses[0];
+            const form_fields = this.state.form_fields.slice();
 
             // Determine Headers of table & Filter-by Options
             let headers = [];
             let filterby = [];
-            sample_response.fields.forEach(field => {
+            form_fields.forEach(field => {
                 if (field.type === "Location" || field.type === "Number")
                     headers.push(field.title);
 
@@ -244,7 +244,7 @@ class ControlForm extends Component {
 
             // Build Rows in MaterialUI Components
             let tableRows = [];
-            let sumVals = new Array(rows[0].values.length).fill(0);
+            let sumVals = new Array(form_fields.length).fill(0);
 
             rows.forEach(row => {
                 let rowCells = [];

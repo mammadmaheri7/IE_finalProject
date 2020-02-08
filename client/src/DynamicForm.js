@@ -144,13 +144,17 @@ export default class DynamicForm extends React.Component {
 
       let target = key;
       if(this.valueAvailable){
-        if(type === "Date")
+        if(type === "Date"){
           value = new Date(JSON.parse(JSON.stringify(m.value)));
+        }
         else
           value = m.value;
       }
       else
         value = this.state[target] || "";
+      if(type ==="Location" && (m.options !== undefined)){
+        value = JSON.stringify(m.value)
+      }
 
       let input = (
         <input
