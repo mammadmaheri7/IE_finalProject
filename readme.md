@@ -286,7 +286,7 @@
 ## Insert a new _polygon_ area to database:
 
 * **Request**:
-    + `PUT`
+    + `POST`
     + `/api/polygons/`
         ```json
         {

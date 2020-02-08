@@ -54,21 +54,7 @@ class ControlForm extends Component {
             form_id: null,
             form_fields: null,
             responses: null,
-            polygons:
-            [
-                {
-                    polygon_id: 1,
-                    name: "تهران" 
-                },
-                {
-                    polygon_id: 2,
-                    name: "یزد" 
-                },
-                {
-                    polygon_id: 3,
-                    name: "مشهد" 
-                },
-            ],
+            polygons: null,
             filter: {
                 options: [],
                 name: null, // Field name
@@ -102,8 +88,18 @@ class ControlForm extends Component {
                 })
             });
 
-        // TODO:
         // fetch polygons
+        fetch(`http://localhost:5000/api/polygons`)
+        .then(
+            results => results.json(),
+            error => alert("ERR: " + error)
+        )
+        .then(json => {
+            console.log(json.polygons);
+            this.setState({
+                polygons: json.polygons
+            })
+        });
 
     }
 
