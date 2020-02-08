@@ -49,31 +49,6 @@ module.exports = (app) => {
             result.responses.push(temp);
         });
 
-
-      // responses.forEach(resp => {
-      //   let one_response = {}
-
-      //   one_response.response_id = resp._id
-
-      //   let temp_arr = []
-
-      //   form.fields.forEach(el => {
-          
-      //   });
-
-      //   one_response.fields = temp_arr
-
-      //   //final_responses.push(resp.response.Loc)
-      //   final_responses.push(one_response)
-         
-      // });
-      //return res.send(req.params.fid + req.query.field + req.query.polygon_id)
-
-
-
-
-      //result.responses = final_responses
-
       return res.send(result) 
       
     })
