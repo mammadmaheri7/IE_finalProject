@@ -53,11 +53,13 @@ class Control extends Component {
 
             return (
                 <Container>
-                    <h2 className="form-title">{this.state.responseInfo.title}</h2>
+                    <br/>
                     
-                    <Button variant="contained" color="primary" href={`/control/form/${this.state.responseInfo.form_id}`}>
+                    <Button style={{ float: "left" }} variant="contained" color="primary" href={`/control/form/${this.state.responseInfo.form_id}`}>
                         « برگشت
-                    </Button>
+                    </Button>                    
+
+                    <div style={{clear: "both"}}></div>
 
                     <DynamicForm
                         valueAvailable={true}

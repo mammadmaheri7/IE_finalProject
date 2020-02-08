@@ -100,11 +100,11 @@ class FieldForm extends Component {
         {
             return (
                 <Container>
-                    <h2>{this.state.formInfo.title}</h2>
-                    
-                    <Button variant="contained" color="primary" href="/field">
+                    <Button variant="contained" color="primary" href="/field" style={{ float: "left" }}>
                         « برگشت
                     </Button>
+                    
+                    <h2>{this.state.formInfo.title}</h2>
 
                     <DynamicForm
                         className="form"
