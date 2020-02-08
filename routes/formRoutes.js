@@ -132,7 +132,6 @@ module.exports = (app) => {
         respond._id = temp
         respond.response = Object.assign({}, req.body.response)
 
-        //console.log(form.fields)
         let x = await Respond.create(respond).catch(err => {
             return res.status(400).send({
                 "status": "error",
@@ -192,7 +191,7 @@ module.exports = (app) => {
 
         form._id = temp
         form.fields = Object.assign({}, req.body.fields)
-        //console.log(form.fields)
+        
         let x = await Form.create(form).catch(err => {
             return res.status(400).send({
                 "status": "error",
@@ -205,30 +204,5 @@ module.exports = (app) => {
             "message": form.title + " inserted successfuly.",
         })
     });
-
-    // app.get(`/api/forms`, async (req, res) => {
-    //     let forms = await Form.find();
-    //     let response = []
-    //     forms.forEach(element => {
-    //         let temp = {}
-
-    //         temp.title = element.title
-    //         temp.form_id = element._id
-    //         temp.url = "api/forms/" + element._id
-    //         response.push(temp)
-    //     });
-
-    //     let final = {}
-    //     final.forms = response
-    //     return res.status(200).send(final);
-    // });
-
-
-
-
-  
-
-
-    
 
 }
