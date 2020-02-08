@@ -1,5 +1,86 @@
 // src/components/CatInputs.js
 import React from "react"
+
+const createOptions = (props, idx) =>{
+  let out = {}
+  if(props.fields[idx].type === "Location"){
+    out = props.fields[idx].options.map((val, option_id)=> {
+      return (<ul>
+        <li>
+        <label htmlFor={option_id}>label</label>
+        </li>
+        <div>
+        <input {...props}
+      type="text"
+      name={option_id}
+      value={props.fields[idx].options[option_id].label} 
+      className="option_label"
+      onChange={(e) => props.handleOptionChange(e,idx,option_id,"label")}
+
+      />
+        </div>
+      <li>
+      <label htmlFor={option_id}>value</label>
+      </li>
+      <div>
+      <label htmlFor={option_id}>lat</label> 
+      <input {...props}
+      type="Text"
+      name={option_id}
+      value={props.fields[idx].options[option_id].value.lat} 
+      className="option_value"
+      onChange={(e) => props.handleOptionChange(e,idx,option_id,"lat")}
+
+      />
+      <label htmlFor={option_id}>long</label>
+      <input {...props}
+      type="Text"
+      name={option_id}
+      value={props.fields[idx].options[option_id].value.long} 
+      className="option_value"
+      onChange={(e) => props.handleOptionChange(e,idx,option_id,"long")}
+
+      />
+      </div>
+
+      </ul>)
+  })
+  }else{
+    out = props.fields[idx].options.map((val, option_id)=> {
+      return (<ul>
+        <li>
+        <label htmlFor={option_id}>label</label>
+        </li>
+        <div>
+        <input {...props}
+      type="text"
+      name={option_id}
+      value={props.fields[idx].options[option_id].label} 
+      className="option_label"
+      onChange={(e) => props.handleOptionChange(e,idx,option_id,"label")}
+
+      />
+        </div>
+      <li>
+      <label htmlFor={option_id}>value</label>
+      </li>
+      <div>
+      <input {...props}
+      type="text"
+      name={option_id}
+      value={props.fields[idx].options[option_id].value} 
+      className="option_value"
+      onChange={(e) => props.handleOptionChange(e,idx,option_id,"value")}
+
+      />
+      </div>
+
+      </ul>)
+  })
+  }
+  return out;
+}
+
 const FieldInputs = (props) => {
   let fieldProps = {}
   fieldProps.required = props.required
@@ -77,37 +158,7 @@ const FieldInputs = (props) => {
       )
       let options = <div></div>
       if(props.fields[idx].options){
-        options =  props.fields[idx].options.map((val, option_id)=> {
-            return (<ul>
-              <li>
-              <label htmlFor={option_id}>label</label>
-              </li>
-              <div>
-              <input {...props}
-            type="text"
-            name={option_id}
-            value={props.fields[idx].options[option_id].label} 
-            className="option_label"
-            onChange={(e) => props.handleOptionChange(e,idx,option_id,"label")}
-
-            />
-              </div>
-            <li>
-            <label htmlFor={option_id}>value</label>
-            </li>
-            <div>
-            <input {...props}
-            type="text"
-            name={option_id}
-            value={props.fields[idx].options[option_id].value} 
-            className="option_value"
-            onChange={(e) => props.handleOptionChange(e,idx,option_id,"value")}
-
-            />
-            </div>
-
-            </ul>)
-        })
+        options =  createOptions(props, idx)
     }
 
       out = <div>

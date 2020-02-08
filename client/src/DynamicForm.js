@@ -13,7 +13,7 @@ export default class DynamicForm extends React.Component {
     super(props);
     this.valueAvailable = this.props.valueAvailable;
     this.model = JSON.parse(this.props.model)
-    this.state.id = this.model.id;
+    this.state.id = this.model.form_id;
 
 
   }
@@ -40,6 +40,7 @@ export default class DynamicForm extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
+    console.log(this.state)
     if (this.props.onSubmit) this.props.onSubmit(this.state);
   };
 
@@ -54,6 +55,14 @@ export default class DynamicForm extends React.Component {
         () => {}
       );
     } 
+    else if(type === "LocationOption"){
+      this.setState(
+        {
+          [key]: JSON.parse(e.target.value)
+        },
+        () => {}
+      );
+    }
     else if (type === "MapLocation"){
      //   console.log("hi i MAPLOCAION!!!!!!!!")
         this.setState(
@@ -124,7 +133,7 @@ export default class DynamicForm extends React.Component {
   renderForm = () => {
     let model = this.model;
     let fields = this.getFields(model)
-    console.log(fields)
+
     let formUI = fields.map(m => {
       let key = m.name;
       let type = m.type || "text";
@@ -136,9 +145,9 @@ export default class DynamicForm extends React.Component {
       let target = key;
       if(this.valueAvailable){
         if(type === "Date")
-        value = new Date(JSON.parse(JSON.stringify(m.value)))////////////////
+          value = new Date(JSON.parse(JSON.stringify(m.value)));
         else
-        value = m.value
+          value = m.value;
       }
       else
         value = this.state[target] || "";
@@ -157,9 +166,7 @@ export default class DynamicForm extends React.Component {
         />
       );
       if(m.options !== undefined){
-        console.log("this is options : ", m.options)
           input = m.options.map(o => {
-            console.log(o.value)
               return (
                 <option
                   {...props}
@@ -172,16 +179,15 @@ export default class DynamicForm extends React.Component {
               );
             });
     
-            //console.log("Select default: ", value);
             input = (
               <select
               {...props}
                 value={value}
                 onChange={e => {
-                  this.onChange(e, key);
+                  this.onChange(e, key, type === "Location" ? "LocationOption" : "single");
                 }}
               >
-                <option value="">Choose</option>
+                <option value="">انتخاب کنید</option>
                 {input}
               </select>
             );
@@ -377,7 +383,6 @@ export default class DynamicForm extends React.Component {
     let submitButtonDisabled = this.valueAvailable;
     return (
       <div className={this.props.className}>
-        <h3 className="form-title">{title}</h3>
         <form
           className="dynamic-form"
           onSubmit={e => {
@@ -386,7 +391,7 @@ export default class DynamicForm extends React.Component {
         >
           {this.renderForm()}
           <div className="form-actions">
-            <Button disabled ={submitButtonDisabled} type="submit" color="primary" variant="contained" >submit</Button>
+            <Button disabled ={submitButtonDisabled} type="submit" color="primary" variant="contained" >ارسال</Button>
           </div>
         </form>
       </div>

@@ -88,7 +88,7 @@ class ControlForm extends Component {
             });
 
         // TODO:
-        // fetch polygons
+        // fetch polygonsd
 
     }
 
@@ -378,7 +378,7 @@ class ControlForm extends Component {
                 <Container>
 
                     <Container>
-                        <h2 className="form-title">{this.state.title}</h2>
+                        <h2>{this.state.title}</h2>
 
                         <Button variant="contained" color="primary" href="/control">
                             « برگشت
