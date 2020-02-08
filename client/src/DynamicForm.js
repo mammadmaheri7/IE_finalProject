@@ -34,39 +34,67 @@ export default class DynamicForm extends React.Component {
       };
     }
 
-    console.log("no state change");
+    //console.log("no state change");
     return null;
   }
 
   onSubmit = e => {
     e.preventDefault();
-    console.log(this.state)
+   // console.log(this.state)
     if (this.props.onSubmit) this.props.onSubmit(this.state);
   };
 
-  onChange = (e, key, type = "single") => {
+  onChange = (e, key, type = "single", isOption = false) => {
     //console.log(`${key} changed ${e.target.value} type ${type}`);
     //console.log(e)
+    //console.log(e.target.value)
+   // console.log(e.target.label)
+   let text = undefined;
+   if(isOption){
+    let selectedIndex = e.nativeEvent.target.selectedIndex;
+    text = e.nativeEvent.target[selectedIndex].text;
+   }
+    console.log(text)
     if (type === "single") {
-      this.setState(
-        {
-          [key]: e.target.value
-        },
-        () => {}
-      );
+      if(isOption){
+        this.setState(
+          {
+            [key]: {label :text ,value: e.target.value}
+          },
+          () => {}
+        );
+      }else{
+        this.setState(
+          {
+            [key]: e.target.value
+          },
+          () => {}
+        );
+      }
     } 
     else if(type ==="Number"){
-      this.setState(
-        {
-          [key]: parseInt(e.target.value)
-        },
-        () => {}
-      );
+      if(isOption){
+        this.setState(
+          {
+            [key]:{ label : text  ,value: parseInt(e.target.value) }
+          },
+          () => {}
+        );
+      }else{
+        this.setState(
+          {
+            [key]: parseInt(e.target.value)
+          },
+          () => {}
+        );
+      }
     }
     else if(type === "LocationOption"){
+      let optionalLocationValue = JSON.parse(e.target.value);
+      optionalLocationValue.label = text;
       this.setState(
         {
-          [key]: JSON.parse(e.target.value)
+          [key]: {value : optionalLocationValue}
         },
         () => {}
       );
@@ -124,7 +152,7 @@ export default class DynamicForm extends React.Component {
       field.props = {}
         if(this.valueAvailable === true){
           field.props.disabled = true;
-          console.log("vallllueee", field.value)
+         // console.log("vallllueee", field.value)
         }
         if(field.required !== undefined){
             field.props.required = field.required
@@ -179,12 +207,16 @@ export default class DynamicForm extends React.Component {
       );
       if(m.options !== undefined){
           input = m.options.map(o => {
+            let optionValue = o.value;
+             if(typeof(optionValue) !== "string"){
+                optionValue = JSON.stringify(optionValue);
+             }
               return (
                 <option
                   {...props}
                   className="form-input"
                   key={o.label}
-                  value={JSON.stringify(o.value)}
+                  value={optionValue}
                 >
                   {(o.label)}
                 </option>
@@ -200,9 +232,9 @@ export default class DynamicForm extends React.Component {
             input = (
               <select
               {...props}
-                value={value}
+                value={value !== undefined ? value.value : value}
                 onChange={e => {
-                  this.onChange(e, key, typeToSend);
+                  this.onChange(e, key, typeToSend, true );
                 }}
               >
                 <option value="">انتخاب کنید</option>

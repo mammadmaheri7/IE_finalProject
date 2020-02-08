@@ -52,17 +52,16 @@ class Control extends Component {
 
             return (
               
-                <Container>
-                    <h1>دیدن جواب‌ها:</h1>
+                <Container>             
+                    <Button style={{ float: "left" }} variant="contained" color="primary" href="/">
+                        « برگشت
+                    </Button>
+
+                    <h2>دیدن جواب‌ها:</h2>
 
                     <List component="nav">
                         {listItems}
                     </List>
-
-                    
-                    <Button variant="contained" color="primary" href="/">
-                        « برگشت
-                    </Button>
                 </Container>
 
             );

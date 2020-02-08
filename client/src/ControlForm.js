@@ -90,16 +90,16 @@ class ControlForm extends Component {
 
         // fetch polygons
         fetch(`http://localhost:5000/api/polygons`)
-        .then(
-            results => results.json(),
-            error => alert("ERR: " + error)
-        )
-        .then(json => {
-            console.log(json.polygons);
-            this.setState({
-                polygons: json.polygons
-            })
-        });
+            .then(
+                results => results.json(),
+                error => alert("ERR: " + error)
+            )
+            .then(json => {
+                console.log(json.polygons);
+                this.setState({
+                    polygons: json.polygons
+                })
+            });
 
     }
 
@@ -194,11 +194,11 @@ class ControlForm extends Component {
             case "Number":
                 query += `/api/forms/${this.state.form_id}/responses/filter/?field=${this.state.filter.name}&lt=${this.state.filter.lt}&gt=${this.state.filter.gt}&eq=${this.state.filter.value}`;
                 break
-        
+
             case "Date":
                 query += `/api/forms/${this.state.form_id}/responses/filter/?field=${this.state.filter.name}&lt=${this.state.filter.lt}&gt=${this.state.filter.gt}&eq=${this.state.filter.value}`;
                 break
-        
+
 
             default:
                 break;
@@ -221,74 +221,13 @@ class ControlForm extends Component {
                 })
             });
 
-
-        // response 1 deleted for example
-        // this.setState({
-        //     responses:
-        //         [
-        //             {
-        //                 response_id: 2,
-        //                 fields:
-        //                     [
-        //                         {
-        //                             name: "Birth_Date",
-        //                             title: "Birth Date",
-        //                             type: "Date",
-        //                             required: true,
-        //                             value: "2020-02-18T20:30:00.000Z"
-
-        //                         },
-        //                         {
-        //                             name: "Number",
-        //                             title: "Number",
-        //                             type: "Number",
-        //                             required: true,
-        //                             value: "3"
-
-        //                         },
-        //                         {
-        //                             name: "Request_Type",
-        //                             title: "Request Type",
-        //                             type: "Text",
-        //                             options:
-        //                                 [
-        //                                     { label: "Help", value: "Help" },
-        //                                     { label: "Info", value: "Information" }
-        //                                 ],
-        //                             value: "\"Help\""
-        //                         },
-        //                         {
-        //                             name: "Home",
-        //                             title: "خانه",
-        //                             type: "Location",
-        //                             label: "خیابان 1",
-        //                             value: {
-        //                                 "lat": 35.618974646696394,
-        //                                 "long": 51.36702734375001
-        //                             },
-        //                         },
-        //                         {
-        //                             name: "Work",
-        //                             title: "محل کار",
-        //                             type: "Location",
-        //                             label: "خیابان 2",
-        //                             value: {
-        //                                 "lat": 55.618974646696394,
-        //                                 "long": 61.36702734375001
-        //                             },
-        //                         },
-        //                     ],
-        //             },
-        //         ],
-        //     ready: true,
-        // })
     }
 
-    
+
     countTableFields = fields => {
         let x = 0;
         fields.forEach(field => {
-            if(field.type === "Location" || field.type === "Number")
+            if (field.type === "Location" || field.type === "Number")
                 x++;
         });
         return x;
@@ -510,11 +449,11 @@ class ControlForm extends Component {
                 <Container>
 
                     <Container>
-                        <h2>{this.state.title}</h2>
-
-                        <Button variant="contained" color="primary" href="/control">
+                        <Button variant="contained" color="primary" href="/control" style={{ float: "left" }}>
                             « برگشت
                         </Button>
+
+                        <h2>{this.state.title}</h2>
 
                         <CSVLink className="csv-dl" data={csv_data} filename="table.csv">دانلود CSV</CSVLink>
 

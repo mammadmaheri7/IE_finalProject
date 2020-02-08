@@ -29,11 +29,11 @@ class Field extends Component {
                     formsReady: true
                 })
             })
-            
+
     }
 
     render() {
-        if(!this.state.formsReady) // Loading Progress Bar
+        if (!this.state.formsReady) // Loading Progress Bar
         {
             return (
                 <LinearProgress />
@@ -45,24 +45,23 @@ class Field extends Component {
             const listItems = forms.map((item) => {
                 return (
                     <ListItem button key={item.form_id} component={Link} to={`/field/form/${item.form_id}`}>
-                            <ListItemText primary={item.title} />
+                        <ListItemText primary={item.title} />
                     </ListItem>
                 );
             });
 
             return (
-              
+
                 <Container>
-                    <h1>ثبت فرم:</h1>
+                    <Button variant="contained" color="primary" href="/" style={{ float: "left" }}>
+                        « برگشت
+                    </Button>
+
+                    <h2>ثبت فرم:</h2>
 
                     <List component="nav">
                         {listItems}
                     </List>
-
-                    
-                    <Button variant="contained" color="primary" href="/">
-                        « برگشت
-                    </Button>
                 </Container>
 
             );
