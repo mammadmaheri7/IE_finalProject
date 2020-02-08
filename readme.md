@@ -435,27 +435,27 @@
 
 * **Request**:
     + `GET`
-    + `/api/forms/<FORM_ID>/responses/filter/?field=<FIELD_NAME>&lt=<LOWER_BOUND>&gt=<UPPER_BOUND>&eq=<EXACT_VALUE>`
+    + `/api/forms/<FORM_ID>/responses/customFilter/?field=<FIELD_NAME>&lt=<LOWER_BOUND>&gt=<UPPER_BOUND>&eq=<EXACT_VALUE>`
 
     - Numeric:
         ```
-        /api/forms/1/responses/filter/?field=Age&eq=25
-        /api/forms/1/responses/filter/?field=Age&gt=18
-        /api/forms/1/responses/filter/?field=Age&lt=30
-        /api/forms/1/responses/filter/?field=Age&lt=30&gt=18
+        /api/forms/1/responses/customFilter/?field=Age&eq=25
+        /api/forms/1/responses/customFilter/?field=Age&gt=18
+        /api/forms/1/responses/customFilter/?field=Age&lt=30
+        /api/forms/1/responses/customFilter/?field=Age&lt=30&gt=18
         ```
 
     - Date:
         ```
-        /api/forms/1/responses/filter/?field=Submit_Date&eq=2020-01-01
-        /api/forms/1/responses/filter/?field=Submit_Date&lt=2020-02-30
-        /api/forms/1/responses/filter/?field=Submit_Date&gt=2020-01-01
-        /api/forms/1/responses/filter/?field=Submit_Date&lt=2020-02-30&gt=2020-01-01
+        /api/forms/1/responses/customFilter/?field=Submit_Date&eq=2020-01-01
+        /api/forms/1/responses/customFilter/?field=Submit_Date&lt=2020-02-30
+        /api/forms/1/responses/customFilter/?field=Submit_Date&gt=2020-01-01
+        /api/forms/1/responses/customFilter/?field=Submit_Date&lt=2020-02-30&gt=2020-01-01
         ```
 
     - String:
         ```
-        /api/forms/1/responses/filter/?field=First_Name&eq=Ali
+        /api/forms/1/responses/customFilter/?field=First_Name&eq=Ali
         ```
 
 * **Response** for filtered request:
