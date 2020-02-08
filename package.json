@@ -11,7 +11,8 @@
     "express": "^4.17.1",
     "express-generator": "^4.16.1",
     "mongoose": "^5.8.10",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "point-in-polygon": "^1.0.1"
   },
   "devDependencies": {},
   "scripts": {
