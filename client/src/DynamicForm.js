@@ -230,7 +230,7 @@ export default class DynamicForm extends React.Component {
             input = (
               <select
               {...props}
-                value={value.value}
+                value={value.value !== undefined ? value.value : value}
                 onChange={e => {
                   this.onChange(e, key, typeToSend, true );
                 }}
