@@ -434,7 +434,7 @@ class ControlForm extends Component {
                         }
                     }
                     else {
-                        csv_row.push(v.value);
+                        csv_row.push((v.value instanceof Object ? v.value.value : v.value));
                     }
 
                 })
