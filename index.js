@@ -18,7 +18,7 @@ require('./models/Polygon')
 const app = express();
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || `mongodb://localhost:27017/final`);
+//mongoose.connect(process.env.MONGODB_URI || `mongodb://localhost:27017/final`);
 
 app.use(bodyParser.json());
 app.use(cors());
