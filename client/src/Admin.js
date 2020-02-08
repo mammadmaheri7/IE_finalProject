@@ -10,7 +10,7 @@ class Admin extends Component {
     onSubmit = model => {
 
 
-        fetch('http://localhost:'+ (process.env.PORT || 5000) +'/api/forms/', {
+        fetch('http://127.0.0.1:'+ (process.env.PORT || 5000) +'/api/forms/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
