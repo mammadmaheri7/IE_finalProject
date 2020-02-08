@@ -8,6 +8,7 @@ require('./models/Product')
 require('./models/Form')
 require('./models/Counter')
 require('./models/Respond')
+require('./models/Polygon')
 
 
 
@@ -26,7 +27,7 @@ app.use(cors());
 require('./routes/productRoutes')(app);
 require('./routes/counterRoutes')(app);
 require('./routes/formRoutes')(app);
-
+require('./routes/polygonRoutes')(app);
 
 
 
