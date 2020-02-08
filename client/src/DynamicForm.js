@@ -44,30 +44,55 @@ export default class DynamicForm extends React.Component {
     if (this.props.onSubmit) this.props.onSubmit(this.state);
   };
 
-  onChange = (e, key, type = "single") => {
+  onChange = (e, key, type = "single", isOption = false) => {
     //console.log(`${key} changed ${e.target.value} type ${type}`);
     //console.log(e)
     //console.log(e.target.value)
+   // console.log(e.target.label)
+   let text = undefined;
+   if(isOption){
+    let selectedIndex = e.nativeEvent.target.selectedIndex;
+    text = e.nativeEvent.target[selectedIndex].text;
+   }
+    console.log(text)
     if (type === "single") {
-      this.setState(
-        {
-          [key]: e.target.value
-        },
-        () => {}
-      );
+      if(isOption){
+        this.setState(
+          {
+            [key]: {label :text ,value: e.target.value}
+          },
+          () => {}
+        );
+      }else{
+        this.setState(
+          {
+            [key]: e.target.value
+          },
+          () => {}
+        );
+      }
     } 
     else if(type ==="Number"){
-      this.setState(
-        {
-          [key]: parseInt(e.target.value)
-        },
-        () => {}
-      );
+      if(isOption){
+        this.setState(
+          {
+            [key]:{ label : text  ,value: parseInt(e.target.value) }
+          },
+          () => {}
+        );
+      }else{
+        this.setState(
+          {
+            [key]: parseInt(e.target.value)
+          },
+          () => {}
+        );
+      }
     }
     else if(type === "LocationOption"){
       this.setState(
         {
-          [key]: JSON.parse(e.target.value)
+          [key]:{ label : text  ,value: JSON.parse(e.target.value) }
         },
         () => {}
       );
@@ -205,9 +230,9 @@ export default class DynamicForm extends React.Component {
             input = (
               <select
               {...props}
-                value={value}
+                value={value.value}
                 onChange={e => {
-                  this.onChange(e, key, typeToSend);
+                  this.onChange(e, key, typeToSend, true );
                 }}
               >
                 <option value="">انتخاب کنید</option>
