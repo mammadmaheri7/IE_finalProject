@@ -12,16 +12,11 @@ require('./models/Counter')
 require('./models/Respond')
 require('./models/Polygon')
 
-
-
-
-
-
 const app = express();
 
 mongoose.Promise = global.Promise;
 //mongoose.connect(process.env.MONGODB_URI || `mongodb://localhost:27017/final`);
-mongoose.connect( `mongodb+srv://mmd:ssd@cluster0-sfn9i.mongodb.net/test?retryWrites=true&w=majority`);
+mongoose.connect(process.env.MONGODB_URI || `mongodb+srv://mmd:ssd@cluster0-sfn9i.mongodb.net/test?retryWrites=true&w=majority`);
 
 app.use(bodyParser.json());
 app.use(cors());
