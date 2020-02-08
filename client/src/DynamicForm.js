@@ -55,6 +55,14 @@ export default class DynamicForm extends React.Component {
         () => {}
       );
     } 
+    else if(type ==="Number"){
+      this.setState(
+        {
+          [key]: parseInt(e.target.value)
+        },
+        () => {}
+      );
+    }
     else if(type === "LocationOption"){
       this.setState(
         {
@@ -182,13 +190,19 @@ export default class DynamicForm extends React.Component {
                 </option>
               );
             });
-    
+            let typeToSend = "single";
+            if(type === "Location" ){
+              typeToSend = "LocationOption";
+            }
+            if(type ==="Number"){
+              typeToSend = "Number";
+            }
             input = (
               <select
               {...props}
                 value={value}
                 onChange={e => {
-                  this.onChange(e, key, type === "Location" ? "LocationOption" : "single");
+                  this.onChange(e, key, typeToSend);
                 }}
               >
                 <option value="">انتخاب کنید</option>
@@ -323,7 +337,7 @@ export default class DynamicForm extends React.Component {
             name={name}
             value={value}
             onChange={e => {
-              this.onChange(e, target);
+              this.onChange(e, target, "Number");
             }}
           />
         );
