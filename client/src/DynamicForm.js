@@ -94,7 +94,7 @@ export default class DynamicForm extends React.Component {
       optionalLocationValue.label = text;
       this.setState(
         {
-          [key]: {value : optionalLocationValue}
+          [key]: optionalLocationValue
         },
         () => {}
       );
