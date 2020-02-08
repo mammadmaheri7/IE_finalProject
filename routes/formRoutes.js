@@ -25,9 +25,13 @@ module.exports = (app) => {
         let responses = []
 
         basic_responses.forEach(br => {
-          if(inside([br.response.Loc.long, br.response.Loc.lat], polygon.geometry.coordinates[0]) ) {
-            responses.push(br)
+          if(field in br.response)
+          {
+            if(inside([br.response[field].long, br.response[field].lat], polygon.geometry.coordinates[0]) ) {
+              responses.push(br)
+            }
           }
+          
         });
     
         const t_con = Object.assign({}, form._doc.fields);
@@ -62,7 +66,6 @@ module.exports = (app) => {
         result.form_id = form._id
 
         let respond = await Respond.findOne({ _id: reqId })
-        //console.log(respond)
         result.response_id = respond._id
 
         let temp = []
@@ -86,14 +89,10 @@ module.exports = (app) => {
         result.title = form.title
         result.form_id = form._id
 
-
-        //console.log(result.form_fields)
-
         const t_con = Object.assign({}, form._doc.fields);
         const con = Object.values(t_con).slice()
 
         result.form_fields = con
-        //console.log(result.form_fields)
 
         let responses = await Respond.find({ form_id: formId })
         //result.responses = responses
