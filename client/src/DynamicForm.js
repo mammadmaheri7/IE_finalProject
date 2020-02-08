@@ -92,6 +92,7 @@ export default class DynamicForm extends React.Component {
     else if(type === "LocationOption"){
       let optionalLocationValue = JSON.parse(e.target.value);
       optionalLocationValue.label = text;
+      console.log(optionalLocationValue)
       this.setState(
         {
           [key]: optionalLocationValue
@@ -211,6 +212,7 @@ export default class DynamicForm extends React.Component {
              if(typeof(optionValue) !== "string"){
                 optionValue = JSON.stringify(optionValue);
              }
+             //optionValue.label = undefined;
               return (
                 <option
                   {...props}
@@ -228,6 +230,9 @@ export default class DynamicForm extends React.Component {
             }
             if(type ==="Number"){
               typeToSend = "Number";
+            }
+            if(value !== undefined){
+              value.label = undefined;
             }
             input = (
               <select
