@@ -293,7 +293,6 @@
             "type": "Feature",
             "properties":
                 {
-                    "polygon_id": 1,
                     "name": "Tehran"
                 },
             "geometry":
