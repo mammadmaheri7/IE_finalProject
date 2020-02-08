@@ -79,6 +79,7 @@ class ControlForm extends Component {
                 error => alert("ERR: " + error)
             )
             .then(json => {
+                console.log(json);
                 this.setState({
                     title: json.title,
                     form_id: json.form_id,
@@ -296,7 +297,7 @@ class ControlForm extends Component {
                         if (val.value.label !== undefined) {
                             rowCell =
                                 <TableCell align="left" key={row.response_id + "_" + val.name}>
-                                    {val.value.label}
+                                    {val.value instanceof Object ? val.value.label : val.label}
                                 </TableCell>
                         }
                         else {
@@ -309,11 +310,11 @@ class ControlForm extends Component {
                     else {
                         rowCell =
                             <TableCell align="left" key={row.response_id + "_" + val.name}>
-                                {val.value}
+                                {val.value instanceof Object ? val.value.value : val.value}
                             </TableCell>
 
                         if (val.type === "Number") {
-                            sumVals[index] += parseInt(val.value);
+                            sumVals[index] += parseInt(val.value instanceof Object ? val.value.value : val.value);
                         }
                     }
                     rowCells.push(rowCell);

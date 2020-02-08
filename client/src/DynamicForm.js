@@ -420,7 +420,6 @@ export default class DynamicForm extends React.Component {
     };
 
     render() {
-        let title = this.model.title;
         let submitButtonDisabled = this.valueAvailable;
         return (
             <div className={this.props.className}>
