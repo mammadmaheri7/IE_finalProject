@@ -204,6 +204,8 @@ class ControlForm extends Component {
                 break;
         }
 
+        console.log(query);
+
         fetch(query)
             .then(
                 results => results.json(),

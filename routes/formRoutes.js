@@ -32,15 +32,30 @@ module.exports = (app) => {
         {
           if(eq !== "null")
           {
-            if((""+br.response[field]).includes(eq)){
-              responses.push(br)
-            }
             
-          }
-          
+            if(!(br.response[field] instanceof Object))
+            {
+              if((""+br.response[field]).includes(eq)){
+                responses.push(br)
+              }
+            }
+            else{
+              if((""+br.response[field].value).includes(eq) || (""+br.response[field].label).includes(eq)){
+                responses.push(br)
+              }
+            }
+          }          
           else if(gt!== "null" || lt!== "null"){
-            if(gt<= br.response[field] && lt>= br.response[field]){
-              responses.push(br)
+            if(!(br.response[field] instanceof Object))
+            {
+              if(gt<= br.response[field] && lt>= br.response[field]){
+                responses.push(br)
+              }
+            }
+            else{
+              if(gt<= br.response[field].value && lt>= br.response[field].value){
+                responses.push(br)
+              }
             }
           }
           /*

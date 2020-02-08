@@ -16,7 +16,7 @@ const app = express();
 
 mongoose.Promise = global.Promise;
 //mongoose.connect(process.env.MONGODB_URI || `mongodb://localhost:27017/final`);
-mongoose.connect(process.env.MONGODB_URI || `mongodb+srv://mmd:ssd@cluster0-sfn9i.mongodb.net/test?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://mmd:ssd@cluster0-sfn9i.mongodb.net/final`, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
