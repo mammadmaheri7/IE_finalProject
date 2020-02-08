@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require("cors");
 
+require('dotenv').config()
+
 // IMPORT MODELS
 require('./models/Product')
 require('./models/Form')
@@ -19,6 +21,7 @@ const app = express();
 
 mongoose.Promise = global.Promise;
 //mongoose.connect(process.env.MONGODB_URI || `mongodb://localhost:27017/final`);
+mongoose.connect(process.env.MONGODB_URI || `mongodb+srv://mmd:ssd@cluster0-sfn9i.mongodb.net/test?retryWrites=true&w=majority`);
 
 app.use(bodyParser.json());
 app.use(cors());
