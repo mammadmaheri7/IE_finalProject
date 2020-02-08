@@ -6,10 +6,8 @@ import './index.css';
 
 // Import Route Components
 import Login from './Login.js';
-
 import Field from './Field.js';
 import FieldForm from './FieldForm.js';
-
 import Control from './Control.js';
 import ControlForm from './ControlForm.js';
 import ControlFormResponse from './ControlFormResponse.js';
@@ -22,7 +20,6 @@ import {
     Route
 }
     from 'react-router-dom';
-
 
 // RTL
 import { create } from 'jss';

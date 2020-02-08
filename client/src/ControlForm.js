@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as Constants from './constants.js';
 
 // Material UI
 import {
@@ -72,13 +73,12 @@ class ControlForm extends Component {
         let { fid } = this.props.match.params;
 
         // fetch responses
-        fetch(`http://localhost:5000/api/forms/${fid}/responses`)
+        fetch(Constants.HOST_URL + `/api/forms/${fid}/responses`)
             .then(
                 results => results.json(),
                 error => alert("ERR: " + error)
             )
             .then(json => {
-                // console.log(json);
                 this.setState({
                     title: json.title,
                     form_id: json.form_id,
@@ -89,7 +89,7 @@ class ControlForm extends Component {
             });
 
         // fetch polygons
-        fetch(`http://localhost:5000/api/polygons`)
+        fetch(Constants.HOST_URL + `/api/polygons`)
             .then(
                 results => results.json(),
                 error => alert("ERR: " + error)
@@ -181,7 +181,7 @@ class ControlForm extends Component {
         })
 
         // API Call to apply filter with query according to filter type
-        let query = "http://localhost:5000";
+        let query = Constants.HOST_URL;
         switch (this.state.filter.type) {
             case "Location":
                 query += `/api/forms/${this.state.form_id}/responses/filter/?field=${this.state.filter.name}&polygon_id=${this.state.filter.value}`;
@@ -203,9 +203,6 @@ class ControlForm extends Component {
             default:
                 break;
         }
-
-
-        console.log(query);
 
         fetch(query)
             .then(

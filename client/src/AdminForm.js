@@ -1,5 +1,6 @@
 import React from "react"
 import FieldInputs from "./FieldInputs"
+
 class AdminForm extends React.Component {
   state = {
     fields: [{name:"", title:"", type :"", required:""}],

@@ -4,14 +4,14 @@ import {
     Button
 } from '@material-ui/core';
 
-import AdminForm from './AdminForm.js'
+import AdminForm from './AdminForm.js';
+import * as Constants from './constants.js';
 
 class Admin extends Component {
     onSubmit = model => {
 
 
-        fetch('https://ie-final-proj.herokuapp.com/api/forms/', {
-        // fetch('http://localhost:5000/api/forms/', {
+        fetch(Constants.HOST_URL + '/api/forms/', {
                 method: 'POST',
             headers: {
                 'Accept': 'application/json',

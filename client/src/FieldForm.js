@@ -6,8 +6,7 @@ import {
 } from '@material-ui/core';
 
 import DynamicForm from './DynamicForm.js';
-
-
+import * as Constants from './constants.js';
 
 class FieldForm extends Component {
     constructor(props) {
@@ -26,7 +25,7 @@ class FieldForm extends Component {
     componentDidMount() {
 
         let { fid } = this.props.match.params;
-        fetch(`http://localhost:5000/api/forms/${fid}`)
+        fetch(Constants.HOST_URL + `/api/forms/${fid}`)
             .then(
                 (results) => results.json(),
                 (error) => alert("ERR: " + error)
@@ -55,7 +54,7 @@ class FieldForm extends Component {
             response: model
         }
         
-        fetch('http://localhost:5000/api/forms/submit', {
+        fetch(Constants.HOST_URL + '/api/forms/submit', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

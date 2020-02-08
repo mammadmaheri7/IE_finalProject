@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
+import * as Constants from './constants.js';
 
 class Field extends Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class Field extends Component {
 
     componentDidMount() {
 
-        fetch(`http://localhost:5000/api/forms`)
+        fetch(Constants.HOST_URL + `/api/forms`)
             .then(results => results.json())
             .then(json => {
                 let forms = json.forms;

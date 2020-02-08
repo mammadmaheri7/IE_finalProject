@@ -6,6 +6,7 @@ import {
     Button
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import * as Constants from './constants.js';
 
 
 class Control extends Component {
@@ -20,7 +21,7 @@ class Control extends Component {
 
     componentDidMount() {
 
-        fetch(`http://localhost:5000/api/forms`)
+        fetch(Constants.HOST_URL + `/api/forms`)
             .then(results => results.json())
             .then(json => {
                 let forms = json.forms;
