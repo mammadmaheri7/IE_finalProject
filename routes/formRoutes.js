@@ -1,11 +1,82 @@
 const mongoose = require('mongoose');
 const Form = mongoose.model('forms');
 const Respond = mongoose.model('responds')
+const Polygon = mongoose.model('polygons')
 
 const Counter = mongoose.model('counters');
+const inside = require('point-in-polygon')
 
 module.exports = (app) => {
+    app.get('/api/forms/:fid/responses/filter',async(req,res) => {
+      let result = {}
+      let formId = req.params.fid
+      let field = req.query.field
+      let polygon_id = req.query.polygon_id
 
+      let polygon = await Polygon.findOne({_id:polygon_id})
+      console.log(polygon)
+
+      let form = await Form.findOne({_id:formId})
+      result.title = form.title
+      result.form_id = form._id
+      result.responses = []
+
+      let basic_responses = await Respond.find({form_id:formId})
+        let responses = []
+
+        basic_responses.forEach(br => {
+          if(inside([br.response.Loc.long, br.response.Loc.lat], polygon.geometry.coordinates[0]) ) {
+            responses.push(br)
+          }
+        });
+    
+        const t_con = Object.assign({}, form._doc.fields);
+        const con = Object.values(t_con).slice()
+
+        responses.forEach(element => {
+            let temp = {};
+            temp.response_id = element._id;
+
+            let reponse_fields_temp = JSON.parse(JSON.stringify(con));
+            reponse_fields = Object.values(reponse_fields_temp).slice();
+
+            reponse_fields.forEach(field => {
+                field.value = element.response[field.name];
+            });
+
+            temp.fields = reponse_fields;
+
+            result.responses.push(temp);
+        });
+
+
+      // responses.forEach(resp => {
+      //   let one_response = {}
+
+      //   one_response.response_id = resp._id
+
+      //   let temp_arr = []
+
+      //   form.fields.forEach(el => {
+          
+      //   });
+
+      //   one_response.fields = temp_arr
+
+      //   //final_responses.push(resp.response.Loc)
+      //   final_responses.push(one_response)
+         
+      // });
+      //return res.send(req.params.fid + req.query.field + req.query.polygon_id)
+
+
+
+
+      //result.responses = final_responses
+
+      return res.send(result) 
+      
+    })
     app.get('/api/forms/:fid/responses/:rid', async (req, res) => {
 
         let formId = req.params.fid
@@ -26,7 +97,7 @@ module.exports = (app) => {
         });
         result.fields = temp
 
-        res.send(result)
+        return res.send(result)
     })
 
 
@@ -69,7 +140,7 @@ module.exports = (app) => {
             result.responses.push(temp);
         });
 
-        res.send(result);
+        return res.send(result);
     })
 
     app.post('/api/forms/submit', async (req, res) => {
@@ -112,7 +183,7 @@ module.exports = (app) => {
         result.form_id = form._id
         result.fields = Object.values(form._doc.fields)
 
-        res.send(result)
+        return res.send(result)
 
     });
 
@@ -161,55 +232,29 @@ module.exports = (app) => {
         })
     });
 
-    app.get(`/api/forms`, async (req, res) => {
-        let forms = await Form.find();
-        let response = []
-        forms.forEach(element => {
-            let temp = {}
+    // app.get(`/api/forms`, async (req, res) => {
+    //     let forms = await Form.find();
+    //     let response = []
+    //     forms.forEach(element => {
+    //         let temp = {}
 
-            temp.title = element.title
-            temp.form_id = element._id
-            temp.url = "api/forms/" + element._id
-            response.push(temp)
-        });
+    //         temp.title = element.title
+    //         temp.form_id = element._id
+    //         temp.url = "api/forms/" + element._id
+    //         response.push(temp)
+    //     });
 
-        let final = {}
-        final.forms = response
-        return res.status(200).send(final);
-    });
-
-
+    //     let final = {}
+    //     final.forms = response
+    //     return res.status(200).send(final);
+    // });
 
 
-    /*
-    app.put(`/api/product/:id`, async (req, res) => { 
-      const {id} = req.params;
+
+
   
-      let product = await Product.findByIdAndUpdate(id, req.body);
-  
-      return res.status(202).send({
-        error: false,
-        product
-      })
-  
-    });
-  
-    app.delete(`/api/product/:id`, async (req, res) => {
-      const {id} = req.params;
-  
-      let product = await Product.findByIdAndDelete(id);
-  
-      return res.status(202).send({
-        error: false,
-        product
-      })
-  
-    })
-    */
 
 
-    app.get('/api/forms/:fid/responses/filter',async (req,res) => {
-      return res.send("injam")
-    })
+    
 
 }
