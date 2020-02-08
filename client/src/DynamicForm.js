@@ -90,11 +90,11 @@ export default class DynamicForm extends React.Component {
       }
     }
     else if(type === "LocationOption"){
-      let valueWithoutLabel = JSON.parse(JSON.stringify(e.target.value));
-      valueWithoutLabel.label = text;
+      let optionalLocationValue = JSON.parse(e.target.value);
+      optionalLocationValue.label = text;
       this.setState(
         {
-          [key]:{ label : text  ,value : valueWithoutLabel }
+          [key]: {value : optionalLocationValue}
         },
         () => {}
       );
