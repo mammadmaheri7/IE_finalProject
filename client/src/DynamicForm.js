@@ -34,19 +34,20 @@ export default class DynamicForm extends React.Component {
       };
     }
 
-    console.log("no state change");
+    //console.log("no state change");
     return null;
   }
 
   onSubmit = e => {
     e.preventDefault();
-    console.log(this.state)
+   // console.log(this.state)
     if (this.props.onSubmit) this.props.onSubmit(this.state);
   };
 
   onChange = (e, key, type = "single") => {
     //console.log(`${key} changed ${e.target.value} type ${type}`);
     //console.log(e)
+    //console.log(e.target.value)
     if (type === "single") {
       this.setState(
         {
@@ -124,7 +125,7 @@ export default class DynamicForm extends React.Component {
       field.props = {}
         if(this.valueAvailable === true){
           field.props.disabled = true;
-          console.log("vallllueee", field.value)
+         // console.log("vallllueee", field.value)
         }
         if(field.required !== undefined){
             field.props.required = field.required
@@ -179,12 +180,16 @@ export default class DynamicForm extends React.Component {
       );
       if(m.options !== undefined){
           input = m.options.map(o => {
+            let optionValue = o.value;
+             if(typeof(optionValue) !== "string"){
+                optionValue = JSON.stringify(optionValue);
+             }
               return (
                 <option
                   {...props}
                   className="form-input"
                   key={o.label}
-                  value={JSON.stringify(o.value)}
+                  value={optionValue}
                 >
                   {(o.label)}
                 </option>
